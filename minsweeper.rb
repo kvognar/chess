@@ -1,3 +1,4 @@
+# encoding: utf-8
 require 'yaml'
 
 class Tile
@@ -12,8 +13,25 @@ class Tile
     @flagged = false
   end
   
+  EMOJI_HASH = {
+    '1' => "1️⃣",
+    "2" => "2️⃣",
+    "3" => "3️⃣",
+    "4" => "4️⃣",
+    "5" => "5️⃣",
+    "6" => "6️⃣",
+    "7" => "7️⃣",
+    "8" => "8️⃣",
+    "9" => "9️⃣",
+    'F' => "🚩",
+    'B' => '💣',
+    '*' => "⬛️",
+    '_' => "◻️"
+    
+  }
+  
   def to_s
-    @display_value
+    EMOJI_HASH[@display_value]
   end
   
 
@@ -80,9 +98,9 @@ class Board
       [-1,1],
       [-1,-1],
       [0,1],
-      [0,1],
+      [0,-1],
       [1,0],
-      [1,0]
+      [-1,0]
     ]
 
   def populate_neighbors
@@ -106,11 +124,15 @@ class Board
 
 
   def display
-    # y = 0
-  #   x_coords = " 2 3 4 5 6 7 8 9"
+    y = 8
+    x_coords = "   0 1 2 3 4 5 6 7 8"
     @board.each do |row|
+      print "#{y} |"
       puts row.join(' ')
+      y -= 1
     end
+ 
+    puts x_coords
   end
   
   def reveal_all_bombs
@@ -192,7 +214,7 @@ class MineSweeper
   
   def save_the_game
     
-    Dir.mkdir('save_games') unless  Dir.directory?('save_games')
+    Dir.mkdir('save_games') unless  File.directory?('save_games')
     
     puts "Enter a name for this save:"
     save_name = gets.chomp
@@ -207,7 +229,9 @@ class MineSweeper
     puts "What file will you load?"
     save_games = Dir.glob("save_games/*.sweep").map do |filename|
       filename.gsub(".sweep", '').gsub("save_games/", '')
+    end
     puts save_games
+
     
     begin
       name = gets.chomp
@@ -227,7 +251,7 @@ class MineSweeper
     puts "Welcome to Minesweeper!"
     puts "New game (N) or load a saved game (L)?"
     if gets.chomp.downcase == "n"
-      Minesweeper.new.game_loop
+      self.new.game_loop
     else
       self.load_the_game
     end
@@ -235,10 +259,7 @@ class MineSweeper
   
 end
 
-
-
-MineSweeper.new.game_loop
-
+MineSweeper.menu
 
 
 #Array.new = [B, B, B, *, *, *].shuffle
