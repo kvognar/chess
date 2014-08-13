@@ -10,6 +10,7 @@ class ChessGUI
     @board = Board.new
     @root = TkRoot.new { title "Chess" }
     @current_turn = "white"
+    current_turn = @current_turn.capitalize
     
     rect_size = @rect_size = 40
     @canvas = TkCanvas.new(@root) do
@@ -23,6 +24,13 @@ class ChessGUI
 
     @frame = TkFrame.new { pack }
     draw_static_board
+    
+    @turn_label = TkLabel.new(@root) do
+      text "#{current_turn}'s turn"
+      padx 15
+      pady 15
+      pack
+    end
   end
 
   def draw_static_board
@@ -41,6 +49,30 @@ class ChessGUI
                          )
      end
    end
+   draw_pieces
+ end
+ 
+ def draw_highlight_square(piece, pos)
+   y, x = piece.pos
+   rect_size = @rect_size
+   TkcRectangle.new(@canvas, 
+                    x * rect_size,
+                    y * rect_size,
+                    (x + 1) * rect_size,
+                    (y + 1) * rect_size,
+                    fill: "yellow"
+                    )
+   TkcText.new(@canvas,
+               x * (rect_size) + rect_size / 2,
+               y * (rect_size) + rect_size / 2 - 2,
+               text: piece,
+               font: { size: rect_size }
+               )            
+ end
+ 
+ def draw_pieces
+   rect_size = @rect_size
+   board = @board
    8.times do |x|
      8.times do |y|
        TkcText.new(@canvas,
@@ -54,25 +86,32 @@ class ChessGUI
   end
   
   def touch_piece(pos)
-    pos = pos.map { |i| i / 40 }.reverse
+    piece_pos = pos.map { |i| i / 40 }.reverse
     if @piece_held.nil? 
-      p @piece_held = get_piece(pos) 
+      p @piece_held = get_piece(piece_pos)
+      draw_highlight_square(@piece_held, pos) unless @piece_held.nil?
     else
-      set_piece(pos)
+      switch_players if set_piece(piece_pos)
       @piece_held = nil
+      draw_static_board
     end 
-    draw_static_board     
   end
   
   
+  
   def get_piece(pos)
-    return nil unless @board[pos].color == @current_turn
+    return nil if @board[pos].nil? || @board[pos].color != @current_turn
     @board[pos]
   end
   
   def set_piece(pos)
     # @piece_held 
     @board.move(@piece_held.pos, pos)
+  end
+  
+  def switch_players
+    @current_turn = @current_turn == "white" ? "black" : "white"
+    @turn_label.configure('text', "#{@current_turn.capitalize}'s turn")
   end
   
   def main

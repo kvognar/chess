@@ -73,11 +73,12 @@ class Board
   
   def move(start, end_pos)
     piece = @board[start[0]][start[1]]
-    return unless is_valid_move?(start, end_pos)
+    return false unless is_valid_move?(start, end_pos)
     @board[end_pos[0]][end_pos[1]] = piece
     @board[start[0]][start[1]] = nil
   
     piece.pos = end_pos
+    true
   end
   
   def find_pieces(color)
