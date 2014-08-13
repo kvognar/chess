@@ -31,6 +31,13 @@ class ChessGUI
       pady 15
       pack
     end
+    @check_label = TkLabel.new(@root) do
+      text ''
+      padx 15
+      pady 15
+      pack
+    end
+    
   end
 
   def draw_static_board
@@ -95,9 +102,27 @@ class ChessGUI
       @piece_held = nil
       draw_static_board
     end 
+    
+    display_check_status
+    display_checkmate if @board.checkmate?(@current_turn)
   end
   
+  def display_check_status
+    if @board.in_check?(@current_turn)
+      @check_label.configure('text', "#{@current_turn.capitalize} is in check")
+    else
+      @check_label.configure('text', '')
+    end
+  end
   
+  def display_checkmate
+    winner = @current_turn == "white" ? "black" : "white"
+    Tk.messageBox( 
+      'title'  => "Mate", 
+      'message' =>  "Checkmate! #{winner.capitalize} wins.", 
+      'type'  =>  'ok'
+      )
+  end
   
   def get_piece(pos)
     return nil if @board[pos].nil? || @board[pos].color != @current_turn
