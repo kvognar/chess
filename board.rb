@@ -8,25 +8,6 @@ class Board
   def initialize(blank = false)
     @board = Array.new(8) { Array.new(8) }
     board_setup unless blank
-      # @board[0][0] = Rook.new([0, 0], "white", self)
-      # @board[0][2] = Bishop.new([0, 2], "black", self)
-      # @board[6][0] = Queen.new([6, 0], "white", self)
-      # @board[7][7] = Knight.new([7, 7], "black", self)
-      # @board[0][1] = King.new([0, 1], "white", self)
-      #
-      # @board[1][3] = Pawn.new([1, 3], "white", self)
-      # @board[5][1] = Pawn.new([5, 1], "black", self)
-      # @board[0][5] = Pawn.new([0, 5], "white", self)
-      # @board[7][0] = Pawn.new([7, 0], "black", self)
-      # @board[1][0] = Pawn.new([1, 0], "white", self)
-      #
-      # @board[6][7] = King.new([6, 7], "black", self)
-      # @board[6][6] = Rook.new([6, 6], "black", self)
-      # @board[0][0] = King.new([0,0], "white", self)
-      # @board[1][0] = Queen.new([1,0], "black", self)
-      # @board[0][1] = Queen.new([0,1], "black", self)
-      # @board[1][1] = Queen.new([0,1], "black", self)
-      # @board[7][7] = King.new([7,7], "black", self)
   end
   
   def board_setup
@@ -111,7 +92,7 @@ class Board
   
   def dup
     #get pieces
-    all_pieces = @board.flatten.select { |tile| !tile.nil? }
+    all_pieces = @board.flatten.compact
     
     #collect piece data
     board_pieces = all_pieces.map do |piece|
@@ -120,8 +101,9 @@ class Board
     
     #new board adds pieces with pieces positions
     dupped_board = Board.new(true)
-    board_pieces.each do |piece_type,pos,color|
-      dupped_board.board[pos[0]][pos[1]] = piece_type.new(pos, color, dupped_board)
+    board_pieces.each do |piece_type, pos, color|
+      duped_piece = piece_type.new(pos, color, dupped_board)
+      dupped_board.board[pos[0]][pos[1]] = duped_piece
     end
     
     dupped_board

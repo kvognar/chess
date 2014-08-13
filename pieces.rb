@@ -22,9 +22,6 @@ class Piece
     @pos, @color, @board = position, color, board
   end
   
-  def moves #legal moves, will return an array
-    
-  end
   
   def stats
     { 
