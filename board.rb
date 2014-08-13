@@ -164,7 +164,7 @@ if __FILE__  == $PROGRAM_NAME
   # puts board.move_into_check?([0,1], [1,1], "white")
   # puts board.move_into_check?([6,7], [5,7], "black")
   # p board.board[0][0].stats
-  p board.in_check?("white")
-  p board.checkmate?("white")
-  p board.checkmate?("black")
+  # p board.in_check?("white")
+  # p board.checkmate?("white")
+  # p board.checkmate?("black")
 end
