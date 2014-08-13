@@ -7,7 +7,7 @@ class Board
   
   def initialize(blank = false)
     @board = Array.new(8) { Array.new(8) }
-    unless blank
+    board_setup unless blank
       # @board[0][0] = Rook.new([0, 0], "white", self)
       # @board[0][2] = Bishop.new([0, 2], "black", self)
       # @board[6][0] = Queen.new([6, 0], "white", self)
@@ -22,11 +22,33 @@ class Board
       #
       # @board[6][7] = King.new([6, 7], "black", self)
       # @board[6][6] = Rook.new([6, 6], "black", self)
-      @board[0][0] = King.new([0,0], "white", self)
-      @board[1][0] = Queen.new([1,0], "black", self)
-      @board[0][1] = Queen.new([0,1], "black", self)
-      @board[1][1] = Queen.new([0,1], "black", self)
-      @board[7][7] = King.new([7,7], "black", self)
+      # @board[0][0] = King.new([0,0], "white", self)
+      # @board[1][0] = Queen.new([1,0], "black", self)
+      # @board[0][1] = Queen.new([0,1], "black", self)
+      # @board[1][1] = Queen.new([0,1], "black", self)
+      # @board[7][7] = King.new([7,7], "black", self)
+  end
+  
+  def board_setup
+    place_royalty("white")
+    place_royalty("black")
+    place_pawns("black")
+    place_pawns("white")
+  end
+  
+  def place_royalty(color)
+    royalty = [Rook, Knight, Bishop, Queen, King, Bishop, Knight, Rook]
+    
+    y = color == "white" ? 7 : 0
+    royalty.each_with_index do |piece_type, index|
+      @board[y][index] = piece_type.new([y, index], color, self)
+    end
+  end
+  
+  def place_pawns(color)
+    y = color == "white" ? 6 : 1
+    8.times do |index|
+      @board[y][index] = Pawn.new([y, index], color, self)
     end
   end
   
@@ -67,6 +89,7 @@ class Board
     
     true
   end
+  
   def move(start, end_pos)
     piece = @board[start[0]][start[1]]
     return unless is_valid_move?(start, end_pos)
