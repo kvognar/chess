@@ -27,7 +27,8 @@ class Piece
       landing_spot = [@pos[0] + dy * 2, @pos[1] + dx * 2]
       unless @board[slide_spot].nil? ||
              @board[slide_spot].color == @color ||
-             landing_spot.any? { |i| !i.between?(0,7) }
+             landing_spot.any? { |i| !i.between?(0,7) } ||
+             !@board[landing_spot].nil?
         landing_spots << landing_spot
       end
     end
@@ -94,36 +95,36 @@ class Piece
   
   def perform_moves!(move_sequence)
     if move_sequence.count == 1 && slides.include?(move_sequence[0])
+      if @board.jump_possible?(@color)
+        raise InvalidMoveError.new("You must jump!")
+        return false
+      end
       slide!(move_sequence[0])
-      return
-    end 
-    move_sequence.each do |move|
-      # begin
+    else 
+      move_sequence.each do |move|
         jump!(move)
-      # rescue InvalidMoveError => e
-      #   puts e.message
-      #   break
-      # end
+      end
     end
+    true
   end
   
   def perform_moves(move_sequence)
     if valid_move_sequence?(move_sequence)
-      perform_moves!(move_sequence)
+      return perform_moves!(move_sequence)
     else
       raise InvalidMoveError.new("Invalid move sequence!")
       return false
     end
-    true
+    # true
   end
   
   def valid_move_sequence?(move_sequence)
-    begin
+    # begin
       @board.dup[@pos].perform_moves!(move_sequence)
-    rescue InvalidMoveError
-      return false
-    end
-    true
+    # rescue InvalidMoveError
+    #   return false
+    # end
+    # true
   end
   
   

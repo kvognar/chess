@@ -22,7 +22,7 @@ class Checkers
   end
   
   def lift_piece(pos)
-    piece = get_piece(pos)
+    piece = @board[pos]
     return nil if piece.nil? || piece.color != @board.current_turn
     @piece_held = piece
   end
@@ -37,7 +37,8 @@ class Checkers
     @piece_held = nil
     @planned_moves = []
     @board.switch_turns if success
-    puts @board.current_turn 
+    # puts @board.current_turn
+    puts @board.jump_possible?(@board.current_turn)
   end
   
   def plan_move(pos)
@@ -45,17 +46,18 @@ class Checkers
     p @planned_moves
     p @piece_held
     test_plan = @planned_moves.dup << pos
-    if @piece_held.valid_move_sequence?(test_plan)
-      @planned_moves = test_plan
-    else
-      @planned_moves = []
+    begin
+      if @piece_held.valid_move_sequence?(test_plan)
+        @planned_moves = test_plan
+      else
+        @planned_moves = []
+      end
+    rescue InvalidMoveError => e
+      puts e.message
     end
     @gui.draw_board(@planned_moves.dup)
   end
-  
-  def get_piece(pos)
-    @board[pos]
-  end
+
   
 end
 

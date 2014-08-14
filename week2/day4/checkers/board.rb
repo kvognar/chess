@@ -65,6 +65,12 @@ class Board
   def switch_turns
     @current_turn = @current_turn == :black ? :red : :black
   end
+  
+  def jump_possible?(color)
+    pieces.select { |piece| piece.color == color }.any? do |piece|
+      piece.jumps.count > 0
+    end
+  end
     
   
 end
