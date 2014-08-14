@@ -98,12 +98,12 @@ class Piece
       return
     end 
     move_sequence.each do |move|
-      begin
+      # begin
         jump!(move)
-      rescue InvalidMoveError => e
-        puts e.message
-        break
-      end
+      # rescue InvalidMoveError => e
+      #   puts e.message
+      #   break
+      # end
     end
   end
   
@@ -112,7 +112,9 @@ class Piece
       perform_moves!(move_sequence)
     else
       raise InvalidMoveError.new("Invalid move sequence!")
+      return false
     end
+    true
   end
   
   def valid_move_sequence?(move_sequence)

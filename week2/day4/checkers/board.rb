@@ -1,11 +1,12 @@
 require_relative 'piece'
 
 class Board
-  attr_reader :grid
+  attr_reader :grid, :current_turn
   
   def initialize(empty = false)
     @grid = Array.new(8) { Array.new(8) }
     [:black, :red].each { |color| place_pieces(color) } unless empty
+    @current_turn = :red
   end
   
   def place_pieces(color)
@@ -60,6 +61,10 @@ class Board
   def pieces
     @grid.flatten.compact
   end
+  
+  def switch_turns
+    @current_turn = @current_turn == :black ? :red : :black
+  end
     
   
 end
@@ -80,6 +85,6 @@ def test_jumps(jumps)
   test_board.display
 end
 
-test_jumps([[3,3], [5,1], [7,3]])
-test_jumps([[3,3], [6,1], [7,3]])
-test_jumps([[2,0]])
+# test_jumps([[3,3], [5,1], [7,3]])
+# test_jumps([[3,3], [6,1], [7,3]])
+# test_jumps([[2,0]])

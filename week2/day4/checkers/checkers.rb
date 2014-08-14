@@ -2,25 +2,55 @@ require_relative 'board'
 require_relative 'checkers_gui'
 
 class Checkers
+  attr_reader :piece_held
   
   def initialize
     @board = Board.new
     @gui = CheckersGUI.new(self, @board)
+    @planned_moves = []
     
     @gui.main
   end
   
   def touch_piece(pos)
     if @piece_held.nil?
-      @piece_held = get_piece(pos)
-      puts @piece_held
-      @gui.draw_board
+      lift_piece(pos)
     else
-      @piece_held.perform_moves([pos])
-      @piece_held = nil
-      @gui.draw_board
+      place_piece(pos)
     end
-    
+    @gui.draw_board
+  end
+  
+  def lift_piece(pos)
+    piece = get_piece(pos)
+    return nil if piece.nil? || piece.color != @board.current_turn
+    @piece_held = piece
+  end
+  
+  def place_piece(pos)
+    @planned_moves << pos unless @planned_moves.last == pos
+    begin
+      success = @piece_held.perform_moves(@planned_moves)
+    rescue InvalidMoveError => e
+      puts e.message
+    end
+    @piece_held = nil
+    @planned_moves = []
+    @board.switch_turns if success
+    puts @board.current_turn 
+  end
+  
+  def plan_move(pos)
+    return unless @piece_held
+    p @planned_moves
+    p @piece_held
+    test_plan = @planned_moves.dup << pos
+    if @piece_held.valid_move_sequence?(test_plan)
+      @planned_moves = test_plan
+    else
+      @planned_moves = []
+    end
+    @gui.draw_board(@planned_moves.dup)
   end
   
   def get_piece(pos)

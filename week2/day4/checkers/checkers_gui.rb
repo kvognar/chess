@@ -12,13 +12,11 @@ class CheckersGUI
   end
   
   def touch(touch_pos)
-    board_pos = touch_pos.map { |i| i / @rect_size }
-    @game.touch_piece(board_pos.reverse)
+    @game.touch_piece(board_pos(touch_pos))
   end
   
   def plan(touch_pos)
-    board_pos = touch_pos.map { |i| i / @rect_size }
-    
+    @game.plan_move(board_pos(touch_pos))
   end
   
   def make_canvas(rect_size, game)
@@ -33,16 +31,17 @@ class CheckersGUI
     @canvas.bind("2", proc { |e| plan([e.x, e.y]) })
   end
   
-  def draw_board
+  def draw_board(highlights = [])
     @canvas.delete("all") #Saves memory
-    draw_grid(@rect_size)
+    draw_grid(@rect_size, highlights)
     draw_pieces(@rect_size)
   end
   
-  def draw_grid(rect_size)
+  def draw_grid(rect_size, highlights)
     8.times do |x|
       8.times do |y|
         fill = (x+y).even? ? "red" : "black"
+        fill = "cyan" if highlights.include?([y,x])
         TkcRectangle.new(@canvas,
                          x * rect_size,
                          y * rect_size,
@@ -55,11 +54,13 @@ class CheckersGUI
   
   def draw_pieces(rect_size)
     @board.pieces.each do |piece|
+      fill = piece == @game.piece_held ? "green" : "black"
       TkcText.new(@canvas,
                   piece.pos[1] * rect_size + rect_size / 2,
                   piece.pos[0] * rect_size + rect_size / 2,
                   text: piece,
-                  font: { size: rect_size }
+                  font: { size: rect_size },
+                  fill: fill
                   )
     end
   end
@@ -67,6 +68,12 @@ class CheckersGUI
   
   def main
     Tk.mainloop
+  end
+  
+  private
+  
+  def board_pos(touch_pos)
+    touch_pos.map { |i| i / @rect_size }.reverse
   end
   
 end
