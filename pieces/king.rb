@@ -7,4 +7,10 @@ class King < SteppingPiece
   def vector
     STRAIGHT + DIAGONAL
   end
+  
+  # def moves
+  #   moves = super
+  #   moves.select { |move| @board.move_into_check?(@pos, move, @color)}
+  # end
+  
 end

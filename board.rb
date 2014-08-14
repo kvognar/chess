@@ -3,10 +3,11 @@ require 'debugger'
 require './pieces.rb'
 
 class Board
-  attr_accessor :board
+  attr_accessor :board, :current_turn
   
-  def initialize(blank = false)
+  def initialize(blank = false, current_turn = "white")
     @board = Array.new(8) { Array.new(8) }
+    @current_turn = current_turn
     board_setup unless blank
   end
   
@@ -53,21 +54,16 @@ class Board
   def is_valid_move?(start, end_pos, print_errors = true)
     piece = @board[start[0]][start[1]]
     
-    begin
-      raise NilPieceError if piece.nil?
-      raise InvalidMoveError unless piece.moves.include?(end_pos)
-      raise MoveIntoCheckError if move_into_check?(start, end_pos, piece.color)
-    rescue NilPieceError
-      puts "There's no piece there" if print_errors
+    if piece.nil?
       return false
-    rescue InvalidMoveError
-      puts "Not a valid move" if print_errors
+    elsif !piece.moves.include?(end_pos)
+      raise InvalidMoveError.new("Not a valid move") if print_errors
       return false
-    rescue MoveIntoCheckError
-      puts "Don't put your king in danger!" if print_errors
+    elsif move_into_check?(start, end_pos, piece.color)
+      raise InvalidMoveError.new("Can't move into check") if print_errors
       return false
     end
-    
+
     true
   end
   
@@ -78,6 +74,7 @@ class Board
     @board[start[0]][start[1]] = nil
   
     piece.pos = end_pos
+    @current_turn = @current_turn == 'white' ? 'black' : 'white'
     true
   end
   
