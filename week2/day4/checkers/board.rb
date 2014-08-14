@@ -47,14 +47,18 @@ class Board
   end
   
   def dup
-    all_pieces = @grid.flatten.compact.map do |piece|
+    piece_data = pieces.map do |piece|
       [piece.color, piece.pos.dup, piece.king]
     end
     dup_board = Board.new(true)
-    all_pieces.each do |color, pos, king|
+    piece_data.each do |color, pos, king|
       dup_board[pos] = Piece.new(color, pos, king, dup_board)
     end
     dup_board
+  end
+  
+  def pieces
+    @grid.flatten.compact
   end
     
   
@@ -76,6 +80,6 @@ def test_jumps(jumps)
   test_board.display
 end
 
-# test_jumps([[3,3], [5,1], [7,3]])
-# test_jumps([[3,3], [6,1], [7,3]])
-# test_jumps([[2,0]])
+test_jumps([[3,3], [5,1], [7,3]])
+test_jumps([[3,3], [6,1], [7,3]])
+test_jumps([[2,0]])
