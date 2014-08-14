@@ -123,7 +123,7 @@ class ChessGUI
   end
   
   def display_checkmate
-    winner = @board.current_turn == "white" ? "black" : "white"
+    winner = @game.board.current_turn == "white" ? "black" : "white"
     Tk.messageBox( 
       'title'  => "Mate", 
       'message' =>  "Checkmate! #{winner.capitalize} wins.", 
