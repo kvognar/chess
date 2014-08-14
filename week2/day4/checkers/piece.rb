@@ -9,9 +9,6 @@ class Piece
     @board = board
   end
   
-  def moves
-    slides + jumps
-  end
   
   def slides
     sliding_spots = vectors.map { |dy, dx| [@pos[0] + dy, @pos[1] + dx] }
@@ -72,27 +69,6 @@ class Piece
     end
   end
   
-  def inspect
-    to_s
-  end
-  
-  def stats
-    {"color" => :color,
-      "moves" => moves,
-      "king?" => @king,
-      "position" => pos
-    }
-  end
-  
-  def middle_square(pos1, pos2)
-    pos1.zip(pos2).map { |a, b| (a + b) / 2 }
-  end
-  
-  def maybe_promote
-    back_row = color == :black ? 7 : 0
-    @king = true if @pos[0] == back_row
-  end
-  
   def perform_moves!(move_sequence)
     if move_sequence.count == 1 && slides.include?(move_sequence[0])
       if @board.jump_possible?(@color)
@@ -110,23 +86,43 @@ class Piece
   
   def perform_moves(move_sequence)
     if valid_move_sequence?(move_sequence)
+      unless valid_jump_sequence?(move_sequence) || is_slide?(move_sequence)
+        return false
+      end
       return perform_moves!(move_sequence)
     else
       raise InvalidMoveError.new("Invalid move sequence!")
       return false
     end
-    # true
+
   end
+  
+
   
   def valid_move_sequence?(move_sequence)
-    # begin
-      @board.dup[@pos].perform_moves!(move_sequence)
-    # rescue InvalidMoveError
-    #   return false
-    # end
-    # true
+    @board.dup[@pos].perform_moves!(move_sequence)
   end
   
+  private
+  
+  def valid_jump_sequence?(move_sequence)
+    dup = @board.dup
+    dup[@pos].perform_moves!(move_sequence)
+    dup[move_sequence.last].jumps.empty?
+  end
+  
+  def is_slide?(move_sequence)
+    move_sequence.count == 1 && slides.include?(move_sequence[0])
+  end
+  
+  def middle_square(pos1, pos2)
+    pos1.zip(pos2).map { |a, b| (a + b) / 2 }
+  end
+  
+  def maybe_promote
+    back_row = color == :black ? 7 : 0
+    @king = true if @pos[0] == back_row
+  end
   
 end
 

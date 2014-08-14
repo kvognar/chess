@@ -17,7 +17,13 @@ class CheckersGUI
   
   def plan(touch_pos)
     @game.plan_move(board_pos(touch_pos))
+  end  
+  
+  def main
+    Tk.mainloop
   end
+  
+  private
   
   def make_canvas(rect_size, game)
     @canvas = TkCanvas.new(@root) do
@@ -64,13 +70,6 @@ class CheckersGUI
                   )
     end
   end
-    
-  
-  def main
-    Tk.mainloop
-  end
-  
-  private
   
   def board_pos(touch_pos)
     touch_pos.map { |i| i / @rect_size }.reverse

@@ -19,6 +19,7 @@ class Checkers
       place_piece(pos)
     end
     @gui.draw_board
+    puts "Game over!" if game_over?
   end
   
   def lift_piece(pos)
@@ -43,8 +44,6 @@ class Checkers
   
   def plan_move(pos)
     return unless @piece_held
-    p @planned_moves
-    p @piece_held
     test_plan = @planned_moves.dup << pos
     begin
       if @piece_held.valid_move_sequence?(test_plan)
@@ -56,6 +55,10 @@ class Checkers
       puts e.message
     end
     @gui.draw_board(@planned_moves.dup)
+  end
+  
+  def game_over?
+    [:red, :black].any? { |color| @board.pieces(color).empty? }
   end
 
   

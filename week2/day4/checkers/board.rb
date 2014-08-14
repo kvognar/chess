@@ -58,8 +58,9 @@ class Board
     dup_board
   end
   
-  def pieces
-    @grid.flatten.compact
+  def pieces(color = nil)
+    return @grid.flatten.compact if color.nil?
+    @grid.flatten.compact.select { |piece| piece.color == color }
   end
   
   def switch_turns
@@ -74,23 +75,3 @@ class Board
     
   
 end
-
-
-
-# test jumps
-def test_jumps(jumps)
-  test_board = Board.new(true)
-  test_board[[1,1]] = Piece.new(:black, [1,1], test_board)
-  test_board[[2,2]] = Piece.new(:white, [2,2], test_board)
-  test_board[[4,2]] = Piece.new(:white, [4,2], test_board)
-  test_board[[6,2]] = Piece.new(:white, [6,2], test_board)
-  test_board.display
-  p test_board[[1,1]].moves
-  test_board[[1,1]].perform_moves(jumps)
-
-  test_board.display
-end
-
-# test_jumps([[3,3], [5,1], [7,3]])
-# test_jumps([[3,3], [6,1], [7,3]])
-# test_jumps([[2,0]])
