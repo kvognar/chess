@@ -1,10 +1,9 @@
 # encoding: utf-8
-require 'debugger'
 
 require 'tk'
 require 'yaml'
-require './board.rb'
-require './chess_gui.rb'
+require_relative 'board'
+require_relative 'chess_gui'
 
 class Chess
   attr_reader :board
@@ -26,7 +25,7 @@ class Chess
   def touch_piece(pos)
     piece_pos = pos.map { |i| i / @gui.rect_size }.reverse
     if @piece_held.nil? 
-      p @piece_held = get_piece(piece_pos)
+      @piece_held = get_piece(piece_pos)
       @gui.draw_static_board(@piece_held) unless @piece_held.nil?
     else
       @gui.display_players if set_piece(piece_pos)

@@ -1,6 +1,5 @@
 # encoding: utf-8
-require 'debugger'
-require './pieces.rb'
+require_relative 'pieces'
 
 class Board
   attr_accessor :board, :current_turn
