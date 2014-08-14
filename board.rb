@@ -89,15 +89,11 @@ class Board
   end
   
   def dup
-    #get pieces
     all_pieces = @board.flatten.compact
-    
-    #collect piece data
     board_pieces = all_pieces.map do |piece|
       [piece.class, piece.pos.dup, piece.color.dup]
     end
     
-    #new board adds pieces with pieces positions
     dupped_board = Board.new(true)
     board_pieces.each do |piece_type, pos, color|
       duped_piece = piece_type.new(pos, color, dupped_board)
@@ -131,9 +127,6 @@ class Board
     piece.pos = end_pos
   end
   
-
-    
-  
 end
 
 class NilPieceError < ArgumentError
@@ -158,11 +151,4 @@ end
 if __FILE__  == $PROGRAM_NAME
   board = Board.new
   board.display
-  # show_moves(board)
-  # puts board.move_into_check?([0,1], [1,1], "white")
-  # puts board.move_into_check?([6,7], [5,7], "black")
-  # p board.board[0][0].stats
-  # p board.in_check?("white")
-  # p board.checkmate?("white")
-  # p board.checkmate?("black")
 end
