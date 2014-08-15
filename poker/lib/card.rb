@@ -20,10 +20,10 @@ class Card
   }
   
   DISPLAY_SUITS = {
-    hearts: "♥︎",
-    spades: "♠︎",
-    diamonds: "♦︎",
-    clubs: "♣︎"
+    hearts:   "H♥︎",
+    spades:   "S♠︎",
+    diamonds: "D♦︎",
+    clubs:    "C♣︎"
   }
   
   def initialize(value, suit)
