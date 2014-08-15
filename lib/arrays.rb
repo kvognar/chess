@@ -28,3 +28,18 @@ def my_transpose(matrix)
   results
 end
 
+def stock_picker(prices)
+  best_profit = 0
+  best_days = nil
+  prices.each_with_index do |price1, day1|
+    (day1 + 1 ... prices.length).each do |day2|
+      profit = prices[day2] - price1
+      if profit > best_profit
+        best_days = [day1, day2] 
+        best_profit = profit
+      end
+    end # day2
+  end # day1
+  
+  best_days
+end
