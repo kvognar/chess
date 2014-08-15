@@ -24,31 +24,25 @@ class CPU_Player
   end
   
   def make_slide(pieces)
-    puts "sliding!"
     piece = pieces.sample
     @game.touch_piece(piece.pos)
     @game.touch_piece(piece.slides.sample)
   end
   
   def make_jump(pieces)
-    puts "jumping!"
     piece = pieces.sample
     test_board = @board.dup
     test_piece = test_board[piece.pos]
+    
     moves = []
     while test_piece.jumps.count > 0
       moves << test_piece.jumps.sample
-      p moves
-      perform_faux_jump(test_board, test_piece, moves.last)
+      test_piece.jump!(moves.last)
     end
 
     @game.touch_piece(piece.pos)
     moves.each { |move| @game.plan_move(move) }
     @game.touch_piece(moves.last)    
-  end
-  
-  def perform_faux_jump(board, piece, move)
-    piece.jump!(move)
   end
 
 end
