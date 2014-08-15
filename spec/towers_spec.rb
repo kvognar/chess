@@ -26,6 +26,24 @@ RSpec.describe(Towers) do
       towers.move(1, 2)
       expect(towers.render).to eq([[3, 2, 1], [], []])
     end
+  end
+  
+  describe "#won?" do    
+
+    it "should be false at start of game" do 
+      expect(towers.won?).to be_false
+    end
+    
+    it "should be true once new tower is made" do
+      towers.move(0, 2)
+      towers.move(0, 1)
+      towers.move(2, 1)
+      towers.move(0, 2)
+      towers.move(1, 0)
+      towers.move(1, 2)
+      towers.move(0, 2)
+      expect(towers.won?).to be_true
+    end
     
   end
 end # /Tower

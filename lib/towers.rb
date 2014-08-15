@@ -15,4 +15,8 @@ class Towers
     true
   end
   
+  def won?
+    @tower[2].length == 3
+  end
+  
 end
