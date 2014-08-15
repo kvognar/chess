@@ -26,6 +26,10 @@ RSpec.describe(Towers) do
       towers.move(1, 2)
       expect(towers.render).to eq([[3, 2, 1], [], []])
     end
+    
+    it "should not move nonexistent pegs" do
+      expect(towers.move(9, 9)).to be_false
+    end
   end
   
   describe "#won?" do    
@@ -47,3 +51,18 @@ RSpec.describe(Towers) do
     
   end
 end # /Tower
+
+
+RSpec.describe Game do
+  
+  subject { Game.new }
+  
+  describe "#prompt" do
+    
+    it "should read input correctly" do
+      subject.stub(:gets)  {"0 2"}
+      expect(subject.prompt).to eq([0, 2])
+    end
+  end
+  
+end
