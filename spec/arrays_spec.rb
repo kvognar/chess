@@ -9,4 +9,10 @@ RSpec.describe(Array) do
     end
   end
   
+  describe "#two_sum" do
+    it "should return index pairs that sum to zero" do
+      expect([-1, 0, 2, -2, 1].two_sum).to eq([[0, 4], [2, 3]])
+    end
+  end
+  
 end
