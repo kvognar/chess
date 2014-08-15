@@ -8,7 +8,6 @@ class CPU_Player
   end
   
   def make_move
-    
     if @board.jump_possible?(@color)
       movable_pieces = @board.pieces(@color).select do |piece|
         piece.jumps.count > 0

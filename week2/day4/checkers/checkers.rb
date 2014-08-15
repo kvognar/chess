@@ -21,8 +21,8 @@ class Checkers
     else
       place_piece(pos)
     end
-    offer_cpu_move
     @gui.draw_board
+    offer_cpu_move
     @gui.display_game_over(@board.current_turn) if game_over?
   end
   
@@ -109,4 +109,6 @@ class Checkers
   end
 end
 
-Checkers.new(cpu = true)
+if __FILE__ == $PROGRAM_NAME
+  Checkers.new(cpu = true)
+end
