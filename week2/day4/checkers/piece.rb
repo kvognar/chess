@@ -1,6 +1,7 @@
 # encoding: utf-8
 class Piece
   attr_reader :pos, :color, :king
+  attr_accessor :pos
   
   def initialize(color, pos, king = false, board)
     @color = color

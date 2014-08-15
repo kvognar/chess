@@ -6,10 +6,10 @@ require_relative 'cpu_player'
 class Checkers
   attr_reader :piece_held
   
-  def initialize
+  def initialize(cpu = false)
     @board = Board.new
     @gui = CheckersGUI.new(self, @board)
-    @cpu = CPU_Player.new(@board, self, :black)
+    @cpu = CPU_Player.new(@board, self, :black) if cpu
     @planned_moves = []
     
     @gui.main
@@ -94,9 +94,10 @@ class Checkers
   private
   
   def offer_cpu_move
-    if @board.current_turn == @cpu.color && 
-      @piece_held.nil? &&
-      game_over? == false
+    if @cpu &&
+       @board.current_turn == @cpu.color && 
+       @piece_held.nil? &&
+       game_over? == false
       @cpu.make_move
     end
   end
@@ -108,4 +109,4 @@ class Checkers
   end
 end
 
-Checkers.new
+Checkers.new(cpu = true)
