@@ -17,3 +17,14 @@ class Array
   end
   
 end
+
+def my_transpose(matrix)
+  results = Array.new(matrix.length) { Array.new(matrix.length) }
+  (0...matrix.length).each do |row|
+    (0...matrix.length).each do |col|
+      results[col][row] = matrix[row][col]
+    end
+  end
+  results
+end
+
