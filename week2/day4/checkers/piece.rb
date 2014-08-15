@@ -9,7 +9,6 @@ class Piece
     @board = board
   end
   
-  
   def slides
     sliding_spots = vectors.map { |dy, dx| [@pos[0] + dy, @pos[1] + dx] }
     sliding_spots.select do |end_pos|

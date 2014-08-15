@@ -72,6 +72,8 @@ class Board
       piece.jumps.count > 0
     end
   end
+  
+  private
     
   
 end

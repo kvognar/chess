@@ -1,5 +1,7 @@
+require 'yaml'
 require_relative 'board'
 require_relative 'checkers_gui'
+require_relative 'cpu_player'
 
 class Checkers
   attr_reader :piece_held
@@ -7,6 +9,7 @@ class Checkers
   def initialize
     @board = Board.new
     @gui = CheckersGUI.new(self, @board)
+    @cpu = CPU_Player.new(@board, self, :black)
     @planned_moves = []
     
     @gui.main
@@ -18,8 +21,9 @@ class Checkers
     else
       place_piece(pos)
     end
+    offer_cpu_move
     @gui.draw_board
-    puts "Game over!" if game_over?
+    @gui.display_game_over(@board.current_turn) if game_over?
   end
   
   def lift_piece(pos)
@@ -33,13 +37,15 @@ class Checkers
     begin
       success = @piece_held.perform_moves(@planned_moves)
     rescue InvalidMoveError => e
-      puts e.message
+      @gui.update_error_label(e.message)
     end
     @piece_held = nil
     @planned_moves = []
-    @board.switch_turns if success
-    # puts @board.current_turn
-    puts @board.jump_possible?(@board.current_turn)
+    if success
+      @gui.update_error_label('')
+      @board.switch_turns
+      @gui.update_turn_label(@board.current_turn)
+    end
   end
   
   def plan_move(pos)
@@ -52,7 +58,7 @@ class Checkers
         @planned_moves = []
       end
     rescue InvalidMoveError => e
-      puts e.message
+      @gui.update_error_label(e.message)
     end
     @gui.draw_board(@planned_moves.dup)
   end
@@ -60,8 +66,46 @@ class Checkers
   def game_over?
     [:red, :black].any? { |color| @board.pieces(color).empty? }
   end
+  
+  def save_game
+    filename = Tk.getSaveFile
+    File.open(filename, 'w') do |save_file|
+      save_file << @board.to_yaml
+    end
+  end
+  
+  def load_game
+    filename = Tk.getOpenFile
+    load_game = YAML::load(File.read(filename))
+    @board = load_game
+    @planned_moves = []
+    @held_piece = nil
+    reset_gui
+  end
+  
+  def new_game
+    @board = Board.new
+    @planned_moves = []
+    @held_piece = nil
+    reset_gui
+  end
 
   
+  private
+  
+  def offer_cpu_move
+    if @board.current_turn == @cpu.color && 
+      @piece_held.nil? &&
+      game_over? == false
+      @cpu.make_move
+    end
+  end
+  
+  def reset_gui
+    @gui.board = @board
+    @gui.draw_board
+    @gui.update_turn_label(@board.current_turn)
+  end
 end
 
 Checkers.new
