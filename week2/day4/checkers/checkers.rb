@@ -110,5 +110,5 @@ class Checkers
 end
 
 if __FILE__ == $PROGRAM_NAME
-  Checkers.new(cpu = true)
+  Checkers.new(cpu = false)
 end
