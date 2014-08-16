@@ -20,10 +20,10 @@ class Card
   }
   
   DISPLAY_SUITS = {
-    hearts:   "H♥︎",
-    spades:   "S♠︎",
-    diamonds: "D♦︎",
-    clubs:    "C♣︎"
+    :hearts =>    "H♥︎",
+    :spades =>    "S♠︎",
+    :diamonds =>  "D♦︎",
+    :clubs =>     "C♣︎"
   }
   
   def initialize(value, suit)
@@ -38,8 +38,20 @@ class Card
     @value < other.value
   end
   
+  def ==(other)
+    @value < other.value
+  end
+  
+  def <=>(other)
+    @value <=> other.value
+  end
+  
+  def inspect
+    render
+  end
+  
   def render
-    "#{DISPLAY_VALUES[@value]}#{DISPLAY_VALUES[@suit]}"
+    "#{DISPLAY_VALUES[@value]}#{DISPLAY_SUITS[@suit]}"
   end
   
 end
