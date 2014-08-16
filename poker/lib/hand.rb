@@ -34,7 +34,6 @@ class Hand
   
   def straight
     values = sort_values
-    
     values.each_with_index do |value, index|
        return false unless value == values[0] + index
     end
@@ -46,28 +45,23 @@ class Hand
   end
   
   def four_of_a_kind
-    values = sort_values
-    values.any? { |val| values.count(val) == 4 }
+    sort_values.any? { |val| sort_values.count(val) == 4 }
   end
   
   def three_of_a_kind
-    values = sort_values
-    values.any? { |val| values.count(val) == 3 }
+    sort_values.any? { |val| sort_values.count(val) == 3 }
   end
   
   def full_house
-    values = sort_values
     three_of_a_kind && one_pair
   end
   
   def two_pair
-    values = sort_values
-    one_pair && values.uniq.count == 3
+    one_pair && sort_values.uniq.count == 3
   end
   
   def one_pair
-    values = sort_values
-    values.any? { |val| values.count(val) == 2 }
+    sort_values.any? { |val| sort_values.count(val) == 2 }
   end
   
   def flush
