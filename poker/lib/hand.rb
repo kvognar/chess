@@ -16,7 +16,7 @@ class Hand
     # debugger
     RANK_ORDER.each do |rank|
       return rank if self.send(rank)
-    end  
+    end 
     # return :royal_flush if royal_flush
   end
   
@@ -57,19 +57,25 @@ class Hand
   
   def full_house
     values = sort_values
-    values.any? { |val| values.count(val) == 3 } &&
-      values.any? { |val| values.count(val) == 2 }
-      
+    three_of_a_kind && one_pair
   end
   
   def two_pair
+    values = sort_values
+    one_pair && values.uniq.count == 3
   end
   
   def one_pair
+    values = sort_values
+    values.any? { |val| values.count(val) == 2 }
   end
   
   def flush
     @cards.all? { |card| card.suit == @cards.first.suit }
+  end
+  
+  def no_pair
+    true
   end
   
   private

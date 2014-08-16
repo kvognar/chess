@@ -15,7 +15,7 @@ RSpec.describe Hand do
     end
   end
   
-  describe "high card" do
+  describe "no pair" do
     before(:each) do
       hand.deal(
         Card.new(14, :diamonds),
@@ -26,8 +26,8 @@ RSpec.describe Hand do
       )
     end
     
-    it "should identify as high card" do
-      expect(hand.rank).to be(:high_card)
+    it "should identify as no pair" do
+      expect(hand.rank).to be(:no_pair)
     end
   end
   
