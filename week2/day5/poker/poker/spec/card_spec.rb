@@ -16,8 +16,7 @@ RSpec.describe Card do
   end
   
   it "should compare to other cards" do
-    expect(card > card2).to be_true
-    expect(card < card2).to be_false
+    expect(card <=> card2).to eq(1)
   end
   
 end

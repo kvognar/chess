@@ -18,7 +18,7 @@ RSpec.describe Hand do
   let(:straight_flush)  { Hand.new }
   let(:royal_flush)     { Hand.new }
   
-  before(:all) do
+  before(:each) do
     no_pair.deal(
       Card.new(14, :diamonds),
       Card.new(7,  :hearts),
@@ -117,7 +117,9 @@ RSpec.describe Hand do
       expect(two_pair.rank).to be(:two_pair)
     end
     
-    it "should give a two-pair score"#
+    it "should beat one pair" do
+      expect(two_pair.beats?(one_pair)).to be_truthy
+    end
 
   end
 
@@ -125,11 +127,19 @@ RSpec.describe Hand do
     it "should identify as three of a kind" do
       expect(three_of_a_kind.rank).to be(:three_of_a_kind)
     end
+    
+    it "should beat two pair" do
+      expect(three_of_a_kind.beats?(two_pair)).to be_truthy
+    end
   end
 
   describe "straight" do
     it "should identify as a straight" do
       expect(straight.rank).to be(:straight)
+    end
+    
+    it "should beat three of a kind" do
+      expect(straight.beats?(three_of_a_kind)).to be_truthy
     end
   end
 
@@ -137,17 +147,29 @@ RSpec.describe Hand do
     it "should identify as a flush" do
       expect(flush.rank).to be(:flush)
     end
+    
+    it "should beat a straight" do
+      expect(flush.beats?(straight)).to be_truthy
+    end
   end
 
   describe "full house" do
     it "should identify as a full house" do
       expect(full_house.rank).to be(:full_house)
     end
+    
+    it "should beat a flush" do
+      expect(full_house.beats?(flush)).to be_truthy
+    end
   end
 
   describe "four of a kind" do
     it "should identify as four of a kind" do
-      expect(four_of_a_kind.rank).to be(:four_of_a_kind)
+      expect(four_of_a_kind.rank).to be(:four_of_a_kind)  
+    end
+    
+    it "should beat a full house" do
+      expect(four_of_a_kind.beats?(full_house)).to be_truthy
     end
   end
 
@@ -155,11 +177,19 @@ RSpec.describe Hand do
     it "should identify as a straight flush" do
       expect(straight_flush.rank).to be(:straight_flush)
     end
+    
+    it "should beat four of a kind" do
+      expect(straight_flush.beats?(four_of_a_kind)).to be_truthy
+    end
   end
 
   describe "royal flush" do
     it "should identify as a royal flush" do
       expect(royal_flush.rank).to be(:royal_flush)
+    end
+    
+    it "should beat a straight flush" do
+      expect(royal_flush.beats?(straight_flush)).to be_truthy
     end
   end
   

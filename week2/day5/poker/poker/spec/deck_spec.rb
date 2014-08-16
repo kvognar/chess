@@ -20,7 +20,7 @@ RSpec.describe Deck do
       
       expect(drawn.first).to be_a(Card)
       expect(drawn.length).to eq(1)
-      # expect(deck.draw!(1)).to contain_exactly(an_instance_of(Card))
+      expect(deck.draw!(1)).to contain_exactly(an_instance_of(Card))
       # expect(deck.count).to eq(51)
     end
     

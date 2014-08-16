@@ -13,11 +13,9 @@ class Hand
   end
   
   def rank
-    # debugger
     RANK_ORDER.each do |rank|
       return rank if self.send(rank)
     end 
-    # return :royal_flush if royal_flush
   end
   
   def high_card?
@@ -27,6 +25,12 @@ class Hand
   def deal(*cards)
     @cards.concat(cards)
   end
+  
+  def beats?(other)
+    RANK_ORDER.index(self.rank) < RANK_ORDER.index(other.rank)
+  end
+  
+  private
   
   def royal_flush
     sort_values == [10, 11, 12, 13, 14] && flush
@@ -71,8 +75,6 @@ class Hand
   def no_pair
     true
   end
-  
-  private
   
   def sort_values
     @cards.map { |card| card.value }.sort
