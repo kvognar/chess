@@ -18,8 +18,16 @@ class Hand
     end 
   end
   
-  def high_card?
-    
+  def high_card
+    if [:royal_flush, :straight_flush, :flush, :straight, :no_pair].include?(rank)
+      sort_values.max
+    elsif [:four_of_a_kind].include?(rank)
+      sort_values.select { |value| sort_values.count(value) == 4 }.max
+    elsif [:full_house, :three_of_a_kind].include?(rank)
+      sort_values.select { |value| sort_values.count(value) == 3}.max
+    elsif [:two_pair, :one_pair].include?(rank)
+      sort_values.select { |value| sort_values.count(value) == 2}.max
+    end
   end
   
   def deal(*cards)
@@ -27,7 +35,14 @@ class Hand
   end
   
   def beats?(other)
-    RANK_ORDER.index(self.rank) < RANK_ORDER.index(other.rank)
+    case RANK_ORDER.index(self.rank) <=> RANK_ORDER.index(other.rank)
+    when -1
+      true
+    when 1
+      false
+    when 0
+      self.high_card > other.high_card
+    end
   end
   
   private

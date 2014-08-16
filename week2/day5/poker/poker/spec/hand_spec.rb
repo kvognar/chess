@@ -27,8 +27,8 @@ RSpec.describe Hand do
       Card.new(2,  :spades)
     )
     one_pair.deal(
-      Card.new(2, :hearts),
-      Card.new(2, :spades),
+      Card.new(3, :hearts),
+      Card.new(3, :spades),
       Card.new(4, :spades),
       Card.new(7, :clubs),
       Card.new(14, :diamonds)
@@ -41,9 +41,9 @@ RSpec.describe Hand do
       Card.new(10, :diamonds)
     )
     three_of_a_kind.deal(
-      Card.new(3, :spades),
-      Card.new(3, :hearts),
-      Card.new(3, :diamonds),
+      Card.new(4, :spades),
+      Card.new(4, :hearts),
+      Card.new(4, :diamonds),
       Card.new(8, :clubs),
       Card.new(9, :clubs)
     )
@@ -101,6 +101,11 @@ RSpec.describe Hand do
     it "should identify as no pair" do
       expect(no_pair.rank).to be(:no_pair)
     end
+    
+    it "should beat other no-pairs with a high card" do
+      other = double("other", rank: :no_pair, high_card: 10)
+      expect(no_pair.beats?(other)).to be(true)
+    end
   end
   
   describe "one pair" do
@@ -108,7 +113,14 @@ RSpec.describe Hand do
       expect(one_pair.rank).to be(:one_pair)
     end
     
-    it "should give a one-pair score" 
+    it "should beat no-pairs" do
+      expect(one_pair.beats?(no_pair)).to be(true)
+    end
+    
+    it "should beat other pairs with a high pair" do
+      other = double("other", rank: :one_pair, high_card: 2)
+      expect(one_pair.beats?(other)).to be(true)
+    end
     
   end
   
@@ -118,7 +130,12 @@ RSpec.describe Hand do
     end
     
     it "should beat one pair" do
-      expect(two_pair.beats?(one_pair)).to be_truthy
+      expect(two_pair.beats?(one_pair)).to be(true)
+    end
+    
+    it "should beat other two-pairs with a high pair" do
+      other = double("other", rank: :two_pair, high_card: 3)
+      expect(two_pair.beats?(other)).to be(true)
     end
 
   end
@@ -129,8 +146,14 @@ RSpec.describe Hand do
     end
     
     it "should beat two pair" do
-      expect(three_of_a_kind.beats?(two_pair)).to be_truthy
+      expect(three_of_a_kind.beats?(two_pair)).to be(true)
     end
+    
+    it "should beat other three-of-a-kinds with a high triplet" do
+      other = double("other", rank: :three_of_a_kind, high_card: 3)
+      expect(three_of_a_kind.beats?(other)).to be(true)
+    end
+    
   end
 
   describe "straight" do
@@ -139,8 +162,14 @@ RSpec.describe Hand do
     end
     
     it "should beat three of a kind" do
-      expect(straight.beats?(three_of_a_kind)).to be_truthy
+      expect(straight.beats?(three_of_a_kind)).to be(true)
     end
+    
+    it "should beat other straights with a high card" do
+      other = double("other", rank: :straight, high_card: 6)
+      expect(straight.beats?(other)).to be(true)
+    end
+    
   end
 
   describe "flush" do
@@ -149,8 +178,14 @@ RSpec.describe Hand do
     end
     
     it "should beat a straight" do
-      expect(flush.beats?(straight)).to be_truthy
+      expect(flush.beats?(straight)).to be(true)
     end
+    
+    it "should beat other flushes with a high card" do
+      other = double("other", rank: :flush, high_card: 7)
+      expect(flush.beats?(other)).to be(true)
+    end
+    
   end
 
   describe "full house" do
@@ -159,8 +194,14 @@ RSpec.describe Hand do
     end
     
     it "should beat a flush" do
-      expect(full_house.beats?(flush)).to be_truthy
+      expect(full_house.beats?(flush)).to be(true)
     end
+    
+    it "should beat other full houses with a high triplet" do
+      other = double("other", rank: :full_house, high_card: 10)
+      expect(full_house.beats?(other)).to be(true)
+    end
+    
   end
 
   describe "four of a kind" do
@@ -169,8 +210,14 @@ RSpec.describe Hand do
     end
     
     it "should beat a full house" do
-      expect(four_of_a_kind.beats?(full_house)).to be_truthy
+      expect(four_of_a_kind.beats?(full_house)).to be(true)
     end
+    
+    it "should beat other four-of-a-kinds with a high quartet" do
+      other = double("other", rank: :four_of_a_kind, high_card: 3)
+      expect(four_of_a_kind.beats?(other)).to be(true)
+    end
+    
   end
 
   describe "straight flush" do
@@ -179,8 +226,14 @@ RSpec.describe Hand do
     end
     
     it "should beat four of a kind" do
-      expect(straight_flush.beats?(four_of_a_kind)).to be_truthy
+      expect(straight_flush.beats?(four_of_a_kind)).to be(true)
     end
+    
+    it "should beat other straight flushes with a high card" do
+      other = double("other", rank: :straight_flush, high_card: 6)
+      expect(straight_flush.beats?(other)).to be(true)
+    end
+    
   end
 
   describe "royal flush" do
@@ -189,8 +242,14 @@ RSpec.describe Hand do
     end
     
     it "should beat a straight flush" do
-      expect(royal_flush.beats?(straight_flush)).to be_truthy
+      expect(royal_flush.beats?(straight_flush)).to be(true)
     end
+    
+    it "should not beat other royal flushes" do
+      other = double("other", rank: :royal_flush, high_card: 14)
+      expect(royal_flush.beats?(other)).to be(false)
+    end                                                        
+      
   end
   
 
