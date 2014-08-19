@@ -30,6 +30,11 @@ jasmine = User.find_by_name("Jasmine", "Rice").first
 q = Question.find_by_id(2)
 r3 = Reply.find_by_id(3)
 # p Question.find_by_author_id(breakfast.id)
-p r3.parent_reply
-p r3.parent_reply.child_replies
+# p r3.parent_reply
+# p r3.parent_reply.child_replies
 
+p QuestionFollower.followers_for_question_id(2)
+p QuestionFollower.followed_questions_for_user_id(2)
+
+p breakfast.followed_questions
+p q.followers
