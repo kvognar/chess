@@ -10,11 +10,11 @@ class QuestionFollower
     result = QuestionsDatabase.instance.execute(<<-SQL, id)
     
     SELECT
-    *
+      *
     FROM
-    question_followers
+      question_followers
     WHERE
-    id = ?
+      id = ?
     SQL
     
     QuestionFollower.new(result.first)

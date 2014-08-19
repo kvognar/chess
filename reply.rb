@@ -10,11 +10,11 @@ class Reply
     result = QuestionsDatabase.instance.execute(<<-SQL, id)
     
     SELECT
-    *
+      *
     FROM
-    replies
+      replies
     WHERE
-    id = ?
+      id = ?
     SQL
     
     Reply.new(result.first)
@@ -24,11 +24,11 @@ class Reply
     results = QuestionsDatabase.instance.execute(<<-SQL, question_id)
     
     SELECT
-    *
+      *
     FROM
-    replies
+      replies
     WHERE
-    question_id = ?
+      question_id = ?
     SQL
     
     results.map { |result| Reply.new(result) }
@@ -38,11 +38,11 @@ class Reply
     results = QuestionsDatabase.instance.execute(<<-SQL, user)
     
     SELECT
-    *
+      *
     FROM
-    replies
+      replies
     WHERE
-    author_id = ?
+      author_id = ?
     SQL
     
     results.map { |result| Reply.new(result) }
@@ -57,11 +57,11 @@ class Reply
     results = QuestionsDatabase.instance.execute(<<-SQL, @author_id)
     
     SELECT
-    *
+      *
     FROM
-    users
+      users
     WHERE
-    id = ?
+      id = ?
     SQL
     
     User.new(results.first)
@@ -71,11 +71,11 @@ class Reply
     results = QuestionsDatabase.instance.execute(<<-SQL, @question_id)
     
     SELECT
-    *
+      *
     FROM
-    questions
+      questions
     WHERE
-    id = ?
+      id = ?
     SQL
     
     Question.new(results.first)
@@ -87,11 +87,11 @@ class Reply
     results = QuestionsDatabase.instance.execute(<<-SQL, @parent_id)
     
     SELECT
-    *
+      *
     FROM
-    replies
+      replies
     WHERE
-    id = ?
+      id = ?
     SQL
     
     Reply.new(results.first)

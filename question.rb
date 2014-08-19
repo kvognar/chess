@@ -1,9 +1,5 @@
 class Question
   
-  def self.cache
-    []
-  end
-  
   attr_accessor :id, :title, :body, :author_id
 
   def self.all
@@ -12,6 +8,7 @@ class Question
   end
   
   def self.find_by_id(id)
+      
     result = QuestionsDatabase.instance.execute(<<-SQL, id)
     
     SELECT
@@ -56,11 +53,11 @@ class Question
     results = QuestionsDatabase.instance.execute(<<-SQL, @author_id)
     
     SELECT
-    *
+      *
     FROM
-    users
+      users
     WHERE
-    users.id = ?
+      users.id = ?
     SQL
     
     User.new(results.first)
