@@ -1,4 +1,9 @@
 class Question
+  
+  def self.cache
+    []
+  end
+  
   attr_accessor :id, :title, :body, :author_id
 
   def self.all
@@ -34,6 +39,14 @@ class Question
     results.map { |result| Question.new(result) }
   end
   
+  def self.most_followed(n)
+    QuestionFollower.most_followed_questions(n)
+  end
+  
+  def self.most_liked(n)
+    QuestionLike.most_liked_questions(n)
+  end
+  
   def initialize(options = {})
     @id, @title, @body, @author_id = 
     options.values_at('id', 'title', 'body', 'author_id')
@@ -54,13 +67,20 @@ class Question
   end
   
   def replies
-    Reply.find_by_question_id(@id)
+    Reply.find_by_question_id(self.id)
   end
   
   def followers
-    QuestionFollower.followers_for_question_id(@id)
+    QuestionFollower.followers_for_question_id(self.id)
   end
   
+  def likers
+    QuestionLike.likers_for_question_id(self.id)
+  end
+  
+  def num_likes
+    QuestionLike.num_likes_for_question_id(self.id)
+  end
 end
 
 

@@ -54,6 +54,7 @@ INSERT INTO
   questions (title, body, author_id)
 VALUES  
   ("breakfast", "What's for breakfast?", 1),
+  ("lunch", "can we eat yet?", 1),
   ("name", "What's your name?", 2);
   
 INSERT INTO
@@ -71,13 +72,15 @@ INSERT INTO
   question_followers (question_id, user_id)
 VALUES
   (1, 1),
-  (2, 2);
+  (2, 2),
+  (1, 2);
   
 INSERT INTO
   question_likes (user_id, question_id)
 VALUES
+  (1, 3),
   (2, 1),
-  (1, 2);
+  (2, 3);
 
 
 

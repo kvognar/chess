@@ -33,8 +33,24 @@ r3 = Reply.find_by_id(3)
 # p r3.parent_reply
 # p r3.parent_reply.child_replies
 
-p QuestionFollower.followers_for_question_id(2)
-p QuestionFollower.followed_questions_for_user_id(2)
+# p QuestionFollower.followers_for_question_id(2)
+# p QuestionFollower.followed_questions_for_user_id(2)
 
-p breakfast.followed_questions
-p q.followers
+# p breakfast.followed_questions
+# p q.followers
+
+# p QuestionFollower.most_followed_questions(1)
+
+# p QuestionLike.liked_questions_for_user_id(1)
+
+# p breakfast.liked_questions
+# p jasmine.liked_questions
+# p q.num_likes
+# p QuestionLike.most_liked_questions(2)
+# puts
+# p QuestionFollower.most_followed_questions(2)
+
+# p Question.most_liked(2)
+p breakfast.average_karma
+p jasmine.average_karma
+
