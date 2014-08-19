@@ -61,6 +61,11 @@ INSERT INTO
 VALUES  
   (1, 2, "Bacon and Eggs"),
   (2, 1, "My name is Breakfast");
+  
+INSERT INTO
+  replies(question_id, parent_id, author_id, body)
+VALUES
+  (2, 2, 2, "Nice to meet you, Breakfast!");
 
 INSERT INTO 
   question_followers (question_id, user_id)
