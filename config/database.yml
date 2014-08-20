@@ -8,7 +8,9 @@ default: &default
   adapter: postgresql
   pool: 5
   timeout: 5000
+  host: localhost
+  username: appacademy
 
 development:
   <<: *default
-  database: db/url_shortener.db
+  database: db/url_shortener
