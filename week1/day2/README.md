@@ -1,1 +1,1 @@
-### Partner today: Jimmy Huang
+### Partner today: [Jimmy Huang](itsjimmyh)

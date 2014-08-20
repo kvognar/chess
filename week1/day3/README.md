@@ -1,1 +1,1 @@
-### Partner today: Anna Petry
+### Partner today: [Anna Petry](https://github.com/annapetry/)

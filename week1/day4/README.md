@@ -1,1 +1,1 @@
-### Partner today: Yusuf Soomro
+### Partner today: [Yusuf Soomro](https://github.com/YusufSoomro)

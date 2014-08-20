@@ -1,1 +1,1 @@
-### Partner today: Matt Leick
+### Partner today: [Matt Leick](https://github.com/mattlock12)
