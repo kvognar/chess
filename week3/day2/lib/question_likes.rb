@@ -1,3 +1,5 @@
+require_relative 'save.rb'
+
 class QuestionLike
   include Save
   attr_accessor :id, :question_id, :user_id

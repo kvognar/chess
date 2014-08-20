@@ -1,3 +1,5 @@
+require_relative 'save.rb'
+
 class User
   include Save
   attr_accessor :id, :fname, :lname
