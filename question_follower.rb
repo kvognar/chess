@@ -1,4 +1,5 @@
 class QuestionFollower
+  include Save
   attr_accessor :id, :question_id, :user_id
 
   def self.all

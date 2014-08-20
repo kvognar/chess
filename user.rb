@@ -1,4 +1,5 @@
 class User
+  include Save
   attr_accessor :id, :fname, :lname
   
   def self.all
@@ -82,36 +83,6 @@ class User
     SQL
   
     results.first.values.first
-  end
-  
-  def save
-    if @id.nil?
-      insert
-    else 
-      update
-    end
-  end
-  
-  def insert
-    QuestionsDatabase.instance.execute(<<-SQL, self.fname, self.lname)
-    INSERT INTO
-      users(fname, lname)
-    VALUES
-      (?, ?)
-    SQL
-    @id = QuestionsDatabase.instance.last_insert_row_id
-  end
-  
-  def update
-    QuestionsDatabase.instance.execute(<<-SQL, self.fname, self.lname, self.id)
-    
-    UPDATE
-      users
-    SET
-      fname = ?, lname = ?
-    WHERE
-      id = ?
-    SQL
   end
   
   

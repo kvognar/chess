@@ -1,4 +1,7 @@
+require_relative 'save.rb'
+
 class Question
+  include Save
   
   attr_accessor :id, :title, :body, :author_id
 

@@ -1,5 +1,7 @@
 require 'singleton'
 require 'sqlite3'
+require 'active_support/inflector'
+require 'debugger'
 require_relative 'user'
 require_relative 'question'
 require_relative 'question_follower'

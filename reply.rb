@@ -1,4 +1,5 @@
 class Reply
+  include Save
   attr_accessor :id, :question_id, :parent_id, :author_id, :body
   
   def self.all

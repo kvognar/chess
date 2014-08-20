@@ -1,4 +1,5 @@
 class QuestionLike
+  include Save
   attr_accessor :id, :question_id, :user_id
   
   def table_name
