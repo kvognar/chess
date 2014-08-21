@@ -1,3 +1,14 @@
+# == Schema Information
+#
+# Table name: polls
+#
+#  id         :integer          not null, primary key
+#  title      :string(255)      not null
+#  author_id  :integer          not null
+#  created_at :datetime
+#  updated_at :datetime
+#
+
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 # This model initially had no columns defined.  If you add columns to the

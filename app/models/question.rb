@@ -1,4 +1,16 @@
+# == Schema Information
+#
+# Table name: questions
+#
+#  id         :integer          not null, primary key
+#  text       :text             not null
+#  poll_id    :integer          not null
+#  created_at :datetime
+#  updated_at :datetime
+#
+
 class Question < ActiveRecord::Base
+  validates :poll_id, :text, presence: true
   
   belongs_to(
     :poll,
@@ -12,6 +24,12 @@ class Question < ActiveRecord::Base
     class_name: "AnswerChoice",
     foreign_key: :question_id,
     primary_key: :id
+  )
+  
+  has_many(
+    :responses,
+    through: :answer_choices,
+    source: :responses
   )
   
 end
