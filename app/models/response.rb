@@ -12,6 +12,7 @@
 class Response < ActiveRecord::Base
   validates :user_id, :answer_choice_id, presence: true
   validate :user_has_not_already_answered_question
+  validate :response_is_not_from_author
   
   belongs_to(
     :user,
@@ -33,24 +34,25 @@ class Response < ActiveRecord::Base
     source: :question
   )
 
-  has_many(
-    :sibling_responses,
-    through: :question,
-    source: :responses
-  )
+  #will not fire query unless instance is already saved to db
+  # has_many(
+  #   :sibling_responses,
+  #   through: :question,
+  #   source: :responses
+  # )
   
-  # def sibling_responses
-  #   #question.responses.where('response.id != ?', self.id)
-  #   question.responses - [self]
-  # end
-  #
-  def stuff
-    debugger
-    self.sibling_responses
+  def sibling_responses
+    #question.responses.where('response.id != ?', self.id)
+    question.responses
+  end
+  
+  def response_is_not_from_author
+    if question.poll.author == user
+      errors[:user] << "cannot vote on own poll"
+    end
   end
   
   def user_has_not_already_answered_question
-    p sibling_responses
     unless (sibling_responses.where('user_id = ?', self.user_id) - [self]).empty?
       errors[:user] << "cannot vote more than once per question"
     end

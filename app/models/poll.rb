@@ -26,4 +26,50 @@ class Poll < ActiveRecord::Base
     primary_key: :id
   )
   
+  def n_plus_1_results
+    results = Hash.new { |h, k| h[k] = Hash.new(0) }
+    questions.each do |question|
+      question.answer_choices.each do |choice|
+        results[question.text][choice.text] += 1
+      end
+    end
+    results
+  end
+  
+  def results
+    results = Hash.new { |h, k| h[k] = Hash.new(0) }
+    questions.includes(:answer_choices).each do |question|
+      question.answer_choices.each do |choice|
+        results[question.text][choice.text] += 1
+      end
+    end
+  end
+  
+  def best_results
+    questions.sql
+    
+    # SELECT
+    # answer_choices.text, COUNT(responses.id ) AS votes
+    # FROM
+    # answer_choices
+    # JOIN
+    # responses
+    #   ON answer_choices.id = responses.answer_choice_id
+    # WHERE
+    # answer_choices.question_id = 1
+    # GROUP BY
+    # answer_choices.id
+      #
+    # Poll.select
+    # .
+    #
+    #
+    
+    questions
+    .select('answer_choices.*, COUNT(responses.id) AS votes')
+    .group('answer_choices.id')
+    
+    
+  end
+  
 end

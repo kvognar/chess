@@ -26,5 +26,13 @@ class AnswerChoice < ActiveRecord::Base
     primary_key: :id
   )
   
+  def votes=(num)
+    @votes = num
+  end
+  
+  def votes
+    @votes
+  end
+  
   
 end
