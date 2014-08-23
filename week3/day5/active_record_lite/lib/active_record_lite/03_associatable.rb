@@ -23,16 +23,14 @@ class AssocOptions
 end
 
 class BelongsToOptions < AssocOptions
-  attr_reader :class_name, :foreign_key, :primary_key
   def initialize(name, options = {})
-    @class_name = options[:class_name] || name.capitalize
+    @class_name = options[:class_name] || name.to_s.capitalize
     @foreign_key = options[:foreign_key] || "#{name}_id".to_sym
     @primary_key = options[:primary_key] || :id
   end
 end
 
 class HasManyOptions < AssocOptions
-  attr_reader :class_name, :foreign_key, :primary_key
   def initialize(name, self_class_name, options = {})
     @class_name = options[:class_name] || name.to_s.capitalize.singularize
     @foreign_key = options[:foreign_key] || "#{self_class_name.downcase.underscore}_id".to_sym
@@ -44,6 +42,7 @@ module Associatable
   # Phase IVb
   def belongs_to(name, options = {})
     options = BelongsToOptions.new(name, options)
+    assoc_options[name] = options
     define_method(name) do
       foreign_key = self.send(options.foreign_key)
       options.model_class.find(foreign_key)
@@ -60,7 +59,7 @@ module Associatable
   end
 
   def assoc_options
-    blank = self.new
+    @assoc_options ||= {}
     # Wait to implement this in Phase V. Modify `belongs_to`, too.
   end
 end
