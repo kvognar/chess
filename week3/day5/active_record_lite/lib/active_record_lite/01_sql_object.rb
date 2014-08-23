@@ -7,13 +7,14 @@ require 'active_support/inflector'
 class SQLObject
     
   def self.columns
+    return @columns if @columns
     query_results = DBConnection.execute2(<<-SQL)
     SELECT
       *
     FROM
       #{self.table_name}
     SQL
-    query_results.first.map(&:to_sym)
+    @columns = query_results.first.map(&:to_sym)
   end
 
   def self.finalize!
@@ -53,7 +54,6 @@ class SQLObject
   end
 
   def self.find(id)
-    self.all.find { |obj| obj.id = id}
     query = DBConnection.execute(<<-SQL, id)
     SELECT
       *
@@ -93,6 +93,7 @@ class SQLObject
 
   def initialize(params = {})
     params.each do |key, value|
+      key = key.to_sym
       if self.class.columns.include?(key)
         self.send("#{key}=", value)
       else
