@@ -37,4 +37,13 @@ class UsersController < ApplicationController
     @user.destroy
     render json: { "message"  =>  "Destroyed!" }
   end
+  
+  def favorites
+    @user = User.find(params[:id])
+    all_contacts = @user.contacts.where('favorite = true') +
+                   @user.shared_contacts.where('contact_shares.favorite = true')
+      
+    
+    render json: all_contacts
+  end
 end

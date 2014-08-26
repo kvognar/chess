@@ -16,4 +16,11 @@ class ContactShare < ActiveRecord::Base
     primary_key: :id
   )
   
+  has_many(
+    :comments,
+    class_name: "Comment",
+    foreign_key: :commentable_id,
+    primary_key: :id,
+    as: :commentable
+    )
 end
