@@ -21,22 +21,41 @@ class CatRentalRequest < ActiveRecord::Base
     source: :rental_requests
   )
   
-  def overlapping_requests
-    
+  def approve!
+    CatRentalRequest.transaction do
+      self.status = "APPROVED"
+      self.save!
+      overlapping_requests.each { |request| request.deny! }
+    end
+  end
+  
+  def deny!
+    self.status = "DENIED"
+    self.save!
+  end
+  
+  def pending?
+    self.status == "PENDING"
+  end
+  
+  # private
+  
+  def overlapping_requests 
     where_query = <<-SQL
-    cat_rental_requests.id != ? 
+      cat_rental_requests.id != ? 
     AND 
-    (start_date BETWEEN ? AND ? 
-    OR end_date BETWEEN ? AND ?)
+      (start_date BETWEEN ? AND ? 
+      OR end_date BETWEEN ? AND ?)
     SQL
     
-    sibling_requests.where(where_query, 
-        id, start_date, end_date, start_date, end_date)
+    sibling_requests.where(
+      where_query, id, start_date, end_date, start_date, end_date
+    )
   end
   
   def overlapping_approved_requests
-    if overlapping_requests.any? {|req| req.status == 'APPROVED'}
-        puts "augh"
+    if overlapping_requests.any? {|req| req.status == 'APPROVED'} &&
+      self.status == "APPROVED"
         errors[:rental_request] << "cannot overlap"
     end
   end

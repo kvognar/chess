@@ -24,7 +24,23 @@
 
 <ul>
   <% @cat.rental_requests.order(:start_date).each do |request| %>
-  <li><%= "Rented from #{request.start_date} to #{request.end_date}" %></li>
+  <li>
+    <%= "Rented from #{request.start_date} to 
+        #{request.end_date}, status: #{request.status}" %>
+      <%= (button_to "Approve",
+          cat_rental_request_approve_url(request),
+          method: :patch) if request.pending?
+      %>
+      <%= (button_to "Deny",
+          cat_rental_request_deny_url(request),
+          method: :patch) if request.pending?
+      %>
+      <%= button_to "Delete", 
+          cat_rental_request_url(request),
+          method: :delete,
+          data: { confirm: "Are you sure?" }
+      %>
+  </li>
   <% end %>
 </ul>
 

@@ -31,9 +31,7 @@ class CatsController < ApplicationController
   
   def update
     @cat = Cat.find(params[:id])
-    @cat.update(cat_params)
-    p @cat
-    if @cat.save
+    if @cat.update_attributes(cat_params)
       redirect_to cat_url(@cat)
     else
       render :edit
@@ -41,12 +39,15 @@ class CatsController < ApplicationController
   end
   
   def destroy
+    Cat.delete(params[:id])
+    redirect_to cats_url
   end
   
   private
   
   def cat_params
-    params.require(:cat).permit(
-        :name, :age, :sex, :birth_date, :color, :description)
+    params
+      .require(:cat)
+      .permit(:name, :age, :sex, :birth_date, :color, :description)
   end
 end
