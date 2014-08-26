@@ -1,0 +1,12 @@
+<h1><%= @cat.name %></h1>
+
+<ul>
+  <li><%= "Color: #{@cat.color}" %></li>
+  <li><%= "Birthday: #{@cat.birth_date}" %></li>
+  <li><%= "Age: #{@cat.age} "%></li>
+  <li><%= "Sex: #{@cat.sex}" %></li>
+</ul>
+
+<p><%= @cat.description %></p>
+
+<%= link_to "Back to cats", cats_url %>
