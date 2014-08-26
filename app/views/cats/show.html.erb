@@ -1,12 +1,31 @@
 <h1><%= @cat.name %></h1>
 
-<ul>
-  <li><%= "Color: #{@cat.color}" %></li>
-  <li><%= "Birthday: #{@cat.birth_date}" %></li>
-  <li><%= "Age: #{@cat.age} "%></li>
-  <li><%= "Sex: #{@cat.sex}" %></li>
-</ul>
+<table style="width:200px">
+  <th> Vital Statistics </th>
+  <tr>
+    <td><%= "Color:" %></td>
+    <td><%= "#{@cat.color}" %></td>
+  </tr>
+  <tr>
+    <td><%= "Birthday:" %></td>
+    <td><%= "#{@cat.birth_date}" %></td>
+  </tr>
+  <tr>
+    <td><%= "Age:" %></td>
+    <td><%= "#{@cat.age}" %></td>
+  </tr>
+  <tr>
+    <td><%= "Sex:" %></td>
+    <td><%= "#{@cat.sex}" %></td>
+  </tr>
+</table>
 
 <p><%= @cat.description %></p>
+
+<ul>
+  <% @cat.rental_requests.order(:start_date).each do |request| %>
+  <li><%= "Rented from #{request.start_date} to #{request.end_date}" %></li>
+  <% end %>
+</ul>
 
 <%= link_to "Back to cats", cats_url %>
