@@ -25,27 +25,33 @@
 
 <p><%= @cat.description %></p>
 
+<%= link_to "Edit cat", edit_cat_url(@cat) if @cat.owner == current_user %>
+
 <ul>
   <% @cat.rental_requests.order(:start_date).each do |request| %>
-  <li class="list_item">
-    <%= "Rented from #{request.start_date} to 
-        #{request.end_date}, status: #{request.status}" %>
-  </li>
-  <li class="buttons">
-      <%= (button_to "Approve",
-          cat_rental_request_approve_url(request),
-          method: :patch) if request.pending?
-      %>
-      <%= (button_to "Deny",
-          cat_rental_request_deny_url(request),
-          method: :patch) if request.pending?
-      %>
-      <%= button_to "Delete", 
-          cat_rental_request_url(request),
-          method: :delete,
-          data: { confirm: "Are you sure?" }
-      %>
-  </li>
+    <li class="list_item">
+      <%= "Requested by #{request.renter.user_name} "%><br>
+      <%= "Start: #{request.start_date}" %><br>
+      <%= "End: #{request.end_date}"%><br>
+      <%= "Status: #{request.status}" %>
+    </li>
+    <% if @cat.owner == current_user %>
+      <div class="buttons">
+          <%= (button_to "Approve",
+              approve_cat_rental_request_url(request),
+              method: :patch) if request.pending?
+          %>
+          <%= (button_to "Deny",
+              deny_cat_rental_request_url(request),
+              method: :patch) if request.pending?
+          %>
+          <%= button_to "Delete", 
+              cat_rental_request_url(request),
+              method: :delete,
+              data: { confirm: "Are you sure?" }
+          %>
+      </div>
+    <% end %>
   <% end %>
 </ul>
 

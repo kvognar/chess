@@ -1,5 +1,5 @@
 class CatRentalRequest < ActiveRecord::Base
-  validates :cat_id, :start_date, :end_date, :status, presence: true
+  validates :cat_id, :start_date, :end_date, :status, :user_id, presence: true
   validates :status, inclusion: { in: ["PENDING", "APPROVED", "DENIED"] }
   validate :overlapping_approved_requests
   validate :start_before_end
@@ -7,6 +7,13 @@ class CatRentalRequest < ActiveRecord::Base
   after_initialize do |request|
     request.status ||= "PENDING"
   end
+  
+  belongs_to(
+    :renter,
+    class_name: "User",
+    foreign_key: :user_id,
+    primary_key: :id
+  )
   
   belongs_to(
     :cat,

@@ -1,8 +1,9 @@
 class CatsController < ApplicationController
+  before_action :require_ownership!, only: [:edit, :update, :destroy]
+  before_action :require_signed_in!, only: [:new, :create]
 
   def index
-    @cats = Cat.all
-
+    @cats = Cat.all.order(:name)
     render :index
   end
   
@@ -18,6 +19,7 @@ class CatsController < ApplicationController
   
   def create
     @cat = Cat.new(cat_params)
+    @cat.owner = current_user
     if @cat.save
       redirect_to cat_url(@cat)
     else
@@ -45,6 +47,10 @@ class CatsController < ApplicationController
   end
   
   private
+  
+  def require_ownership!
+    redirect_to cats_url unless Cat.find(params[:id]).owner == current_user
+  end
   
   def cat_params
     params

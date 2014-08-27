@@ -4,10 +4,12 @@ NinetyNineCats::Application.routes.draw do
   end
   
   resources :cat_rental_requests, only: [:new, :create, :destroy, :show] do
-    patch :approve, action: 'approve'
-    patch :deny, action: 'deny'
+    member do
+      patch :approve, action: 'approve'
+      patch :deny, action: 'deny'
+    end
   end
   
-  resource :user, only: [ :new, :create ]
+  resources :users, only: [ :new, :create ]
   resource :session, only: [ :new, :create, :destroy ]
 end

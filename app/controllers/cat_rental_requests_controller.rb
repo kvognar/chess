@@ -1,4 +1,6 @@
 class CatRentalRequestsController < ApplicationController
+  before_action :require_ownership!, only: [:approve, :deny, :destroy]
+  before_action :require_signed_in!, only: [:create, :new]
   
   def new
     @cats = Cat.all
@@ -8,6 +10,7 @@ class CatRentalRequestsController < ApplicationController
   
   def create
     @request = CatRentalRequest.new(request_params)
+    @request.renter = current_user
     if @request.save
       redirect_to cat_url(@request.cat)
     else
@@ -22,17 +25,22 @@ class CatRentalRequestsController < ApplicationController
   end
   
   def approve
-    @request = CatRentalRequest.find(params[:cat_rental_request_id])
+    @request = CatRentalRequest.find(params[:id])
     @request.approve!
     redirect_to cat_url(@request.cat)
   end
   
   def deny
-    @request = CatRentalRequest.find(params[:cat_rental_request_id])
+    @request = CatRentalRequest.find(params[:id])
     @request.deny!
     redirect_to cat_url(@request.cat)
   end
   
+  def require_ownership!
+    unless CatRentalRequest.find(params[:id]).cat.owner == current_user
+      redirect_to cats_url 
+    end
+  end
   private
   
   def request_params

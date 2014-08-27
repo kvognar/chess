@@ -8,13 +8,13 @@
 </head>
 <body>
 
-<h1 id="site_name" title="more like 3">99 Cats</h1>
+<h1 id="site_name" title="more like 3"><%= link_to "99 Cats", cats_url %></h1>
 <div id="site_login">
-  <% if current_user.nil? %>
-    <%= link_to "Log in!", new_session_url %>
-  <% else %>
+  <% if signed_in? %>
     <%= "Welcome, #{current_user.user_name}!" %>
     <%= button_to "Log out", session_url, method: :delete %>
+  <% else %>
+    <%= link_to "Log in!", new_session_url %>
   <% end %>
 </div>
 

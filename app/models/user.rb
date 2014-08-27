@@ -3,6 +3,20 @@ class User < ActiveRecord::Base
   validates :password_digest, presence: true
   after_initialize :ensure_session_token
   
+  has_many(
+    :cats, 
+    class_name: "Cat",
+    foreign_key: :user_id,
+    primary_key: :id
+  )
+  
+  has_many(
+    :rental_requests,
+    class_name: "CatRentalRequest",
+    foreign_key: :user_id,
+    primary_key: :id
+  )
+  
   
   def self.find_by_credentials(credentials)
      user = User.find_by(user_name: credentials[:user_name])
