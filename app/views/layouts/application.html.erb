@@ -9,11 +9,17 @@
 <body>
 
 <h1 id="site_name" title="more like 3">99 Cats</h1>
+<div id="site_login">
+  <% if current_user.nil? %>
+    <%= link_to "Log in!", new_session_url %>
+  <% else %>
+    <%= "Welcome, #{current_user.user_name}!" %>
+    <%= button_to "Log out", session_url, method: :delete %>
+  <% end %>
+</div>
 
 <div class="container">
-
   <%= yield %>
-
 </div>
 
 </body>

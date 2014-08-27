@@ -7,4 +7,7 @@ NinetyNineCats::Application.routes.draw do
     patch :approve, action: 'approve'
     patch :deny, action: 'deny'
   end
+  
+  resource :user, only: [ :new, :create ]
+  resource :session, only: [ :new, :create, :destroy ]
 end
