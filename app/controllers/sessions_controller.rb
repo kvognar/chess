@@ -19,7 +19,7 @@ class SessionsController < ApplicationController
   def destroy
     @user = current_user
     unless @user.nil?
-      @user.reset_session_token!
+      @user.reset_single_session_token!(session[:session_token])
       session[:session_token] = nil
     end
     redirect_to cats_url

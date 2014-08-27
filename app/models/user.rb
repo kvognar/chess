@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  validates :user_name, :session_token, presence: true, uniqueness: true
+  validates :user_name, presence: true, uniqueness: true
   validates :password_digest, presence: true
   after_initialize :ensure_session_token
   
@@ -17,6 +17,12 @@ class User < ActiveRecord::Base
     primary_key: :id
   )
   
+  has_many(
+    :sessions,
+    class_name: "Session",
+    foreign_key: :user_id,
+    primary_key: :id
+  )
   
   def self.find_by_credentials(credentials)
      user = User.find_by(user_name: credentials[:user_name])
@@ -26,8 +32,14 @@ class User < ActiveRecord::Base
   end
   
   def reset_session_token!
-    self.session_token = SecureRandom::urlsafe_base64(16)
-    self.save!
+    self.sessions.destroy_all
+    self.sessions.create!
+  end
+  
+  def reset_single_session_token!(session_token)
+    cur_session = Session.find_by_session_token(session_token)
+    cur_session.destroy
+    self.sessions.create!
   end
   
   def password=(password)
@@ -39,8 +51,7 @@ class User < ActiveRecord::Base
   end
   
   def ensure_session_token
-    self.session_token ||= SecureRandom::urlsafe_base64(16)
+    reset_session_token! if self.sessions.empty?
   end
-  
   
 end

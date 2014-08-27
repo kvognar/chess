@@ -7,12 +7,18 @@ class ApplicationController < ActionController::Base
   helper_method :signed_in?
   
   def current_user
-    @current_user ||= User.find_by(session_token: session[:session_token])
+    return @current_user unless @current_user.nil?
+    cur_session = Session.find_by(session_token: session[:session_token])
+    if cur_session.nil?
+      return nil
+    else
+      @current_user = cur_session.user
+    end
   end
   
   def login_user!(user)
-    user.reset_session_token!
-    session[:session_token] = user.session_token
+    new_session = user.sessions.create!
+    session[:session_token] = new_session.session_token
   end
   
   def signed_in?
