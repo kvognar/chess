@@ -1,0 +1,52 @@
+<h1><%= @cat.name %></h1>
+
+  <img class="profile_photo" src="<%= @cat.image_url %>">
+
+
+<table style="width:200px">
+  <th> Vital Statistics </th>
+  <tr>
+    <td><%= "Color:" %></td>
+    <td><%= "#{@cat.color}" %></td>
+  </tr>
+  <tr>
+    <td><%= "Birthday:" %></td>
+    <td><%= "#{@cat.birth_date}" %></td>
+  </tr>
+  <tr>
+    <td><%= "Age:" %></td>
+    <td><%= "#{@cat.age}" %></td>
+  </tr>
+  <tr>
+    <td><%= "Sex:" %></td>
+    <td><%= "#{@cat.sex}" %></td>
+  </tr>
+</table>
+
+<p><%= @cat.description %></p>
+
+<ul>
+  <% @cat.rental_requests.order(:start_date).each do |request| %>
+  <li class="list_item">
+    <%= "Rented from #{request.start_date} to 
+        #{request.end_date}, status: #{request.status}" %>
+  </li>
+  <li class="buttons">
+      <%= (button_to "Approve",
+          cat_rental_request_approve_url(request),
+          method: :patch) if request.pending?
+      %>
+      <%= (button_to "Deny",
+          cat_rental_request_deny_url(request),
+          method: :patch) if request.pending?
+      %>
+      <%= button_to "Delete", 
+          cat_rental_request_url(request),
+          method: :delete,
+          data: { confirm: "Are you sure?" }
+      %>
+  </li>
+  <% end %>
+</ul>
+
+<%= link_to "Back to cats", cats_url %>

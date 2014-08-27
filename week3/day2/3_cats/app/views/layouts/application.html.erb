@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>NinetyNineCats</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+ <%#= "data-turbolinks-track" => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+
+<h1 id="site_name" title="more like 3">99 Cats</h1>
+
+<div class="container">
+
+  <%= yield %>
+
+</div>
+
+</body>
+</html>
