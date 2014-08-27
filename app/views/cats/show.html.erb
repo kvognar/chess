@@ -1,5 +1,8 @@
 <h1><%= @cat.name %></h1>
 
+  <img class="profile_photo" src="<%= @cat.image_url %>">
+
+
 <table style="width:200px">
   <th> Vital Statistics </th>
   <tr>
@@ -24,9 +27,11 @@
 
 <ul>
   <% @cat.rental_requests.order(:start_date).each do |request| %>
-  <li>
+  <li class="list_item">
     <%= "Rented from #{request.start_date} to 
         #{request.end_date}, status: #{request.status}" %>
+  </li>
+  <li class="buttons">
       <%= (button_to "Approve",
           cat_rental_request_approve_url(request),
           method: :patch) if request.pending?

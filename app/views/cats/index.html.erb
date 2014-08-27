@@ -1,8 +1,14 @@
 <h1>Every cat</h1>
 
-<ul>
+
+<ul class="cat_list">
   <% @cats.each do |cat| %>
-  <li><%= link_to cat.name, cat_url(cat) %></li>
+  <li>
+    <a href="<%= cat_url(cat) %>">
+      <img class="thumbnail" src= <%= cat.image_url %> >
+    </a>
+    <%= link_to cat.name, cat_url(cat) %>
+  </li>
   <% end %>
 </ul>
 
