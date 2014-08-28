@@ -1,4 +1,5 @@
 class BandsController < ApplicationController
+  before_action :require_signed_in!
   
   def new
     @band = Band.new
