@@ -1,0 +1,29 @@
+class SessionsController < ApplicationController
+  
+  before_action :require_signed_out!, only: [:new, :create]
+  before_action :require_signed_in!, only: [:destroy]
+  
+  def new
+    render :new
+  end
+  
+  def create
+    @user = User.find_by_credentials(session_params)
+    if @user.nil?
+      render :new
+    else
+      @user.reset_session_token!
+      session[:session_token] = @user.session_token
+      redirect_to user_url(@user)
+    end
+  end
+  
+  def destroy
+    @user = current_user
+    sign_out!(@user)
+  end
+  
+  def session_params
+    params.require(:user).permit(:email, :password)
+  end
+end
