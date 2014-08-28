@@ -8,6 +8,8 @@
 </head>
 <body>
 
+<div class="site_header">
+
 <h1 id="site_name" title="more like 3"><%= link_to "99 Cats", cats_url %></h1>
 <div id="site_login">
   <% if signed_in? %>
@@ -16,6 +18,8 @@
   <% else %>
     <%= link_to "Log in!", new_session_url %>
   <% end %>
+</div>
+
 </div>
 
 <div class="container">

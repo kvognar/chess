@@ -45,7 +45,7 @@ class CatRentalRequest < ActiveRecord::Base
     self.status == "PENDING"
   end
   
-  # private
+  private
   
   def overlapping_requests 
     where_query = <<-SQL

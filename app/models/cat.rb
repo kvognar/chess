@@ -1,10 +1,12 @@
 class Cat < ActiveRecord::Base
+  CAT_COLORS = [ "red", "orange", "brown", "black", "calico" ] 
+  
   validates :age, numericality: true, presence: true
   validates :birth_date, :name, presence: true
   validates(
     :color, 
     inclusion: { 
-      in: [ "red", "orange", "brown", "black", "calico" ] 
+      in: CAT_COLORS
     }, 
     presence: true
   )

@@ -20,6 +20,7 @@ html {
 
 a:visited {
   color: rgb(0,0, 50);
+  
 }
 
 .container { 
@@ -34,30 +35,51 @@ a:visited {
   
   font-family: sans-serif;
   
-/*  border: 2px solid;*/
   border-radius: 15px;
   
   
   background-color: rgba(200,100, 10, .5);
 }
 
+
 .cat_list {
   list-style-type: none;
 }
 
+.site_header {
+/*  clear: both;*/
+  display: inline;
+}
+
+
 #site_name{
+
   font-family: sans-serif;
-  font-size: 80px;
+  font-size: 75px;
   margin-top: 5%;
   margin-left: 50%;
   margin-bottom: 0%;
+  clear: right;
+/*  float: left;*/
 }
 
+#site_name a:link {
+  text-decoration: none;
+}
+
+#site_login{
+  font-family: sans-serif;
+  margin-top: 0px;
+  margin-right: 5%;
+
+/*  float: right;*/
+  text-align: right;
+/*  clear: both;*/
+}
 
 
 .buttons form {
   display: inline-block;
-/*  float: ;*/
 }
 
 .profile_photo {
@@ -66,8 +88,4 @@ a:visited {
 
 .thumbnail {
   max-width: 10%;
-}
-
-button {
-  display: inline;
 }
