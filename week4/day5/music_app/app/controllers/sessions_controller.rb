@@ -4,12 +4,14 @@ class SessionsController < ApplicationController
   before_action :require_signed_in!, only: [:destroy]
   
   def new
+    @user = User.new
     render :new
   end
   
   def create
     @user = User.find_by_credentials(session_params)
     if @user.nil?
+      @user = User.new
       render :new
     else
       @user.reset_session_token!

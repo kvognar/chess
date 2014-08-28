@@ -2,6 +2,16 @@
 <% method = album.persisted? ? "PATCH" : "POST" %>
 <% button_text = album.persisted? ? "Update" : "Create" %>
 
+<% unless album.errors.full_messages.empty? %>
+<div class="form_errors">
+  <ul>
+    <% album.errors.full_messages.each do |error| %>
+      <li><%= error %></li>
+    <% end %>
+  </ul>
+</div>
+<% end %>
+
 <form action="<%= action %>", method="POST">
   <input type="hidden" name="_method" value="<%= method %>">
   <%= authenticity_token %>
