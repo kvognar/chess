@@ -17,6 +17,13 @@ class User < ActiveRecord::Base
   
   attr_reader :password
   
+  has_many(
+    :authored_notes,
+    class_name: "Note",
+    foreign_key: :author_id,
+    primary_key: :id
+  )
+  
   def self.generate_session_token
     SecureRandom::urlsafe_base64(16)
   end

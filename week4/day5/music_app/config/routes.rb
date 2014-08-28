@@ -8,7 +8,11 @@ MusicApp::Application.routes.draw do
     resources :tracks, only: [:new, :index]
   end
   
-  resources :tracks
+  resources :tracks do
+    resources :notes, only: [:create]
+  end
+  
+  resources :notes, only: :destroy
   
   resource :session, only: [:new, :create, :destroy]
   

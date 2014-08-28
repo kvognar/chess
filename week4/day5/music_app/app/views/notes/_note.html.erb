@@ -1,0 +1,5 @@
+<h5>Note from <%= note.author.email %></h5>
+<p><%= note.body %></p>
+<% if note.author == current_user %>
+  <%= button_to "Delete note", note_url(note), method: :delete %>
+<% end %>
