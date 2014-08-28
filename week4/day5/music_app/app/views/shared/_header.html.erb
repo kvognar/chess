@@ -1,3 +1,4 @@
+<h1><%= link_to "Raspberry Jams", root_url %></h1>
 <% if signed_in? %>
   <%= "Welcome, #{current_user.email}" %>
   <%= button_to "Sign out", session_url, method: :delete %>

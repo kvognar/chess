@@ -1,0 +1,12 @@
+<h1><%= @track.title %></h1>
+<%= link_to @track.album.title, album_url(@track.album) %> <br>
+<%= link_to "Edit", edit_track_url(@track) %>
+
+<h3>Lyrics</h3>
+<h6>
+  <%= @track.lyrics %>
+</h6>
+
+
+<%= button_to "Delete track", track_url(@track),
+   method: :delete, data: { confirm: "Are you sure?" } %>

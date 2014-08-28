@@ -21,6 +21,7 @@ class SessionsController < ApplicationController
   def destroy
     @user = current_user
     sign_out!(@user)
+    redirect_to new_session_url
   end
   
   def session_params
