@@ -13,10 +13,12 @@ class SessionsController < ApplicationController
     if @user.nil?
       @user = User.new
       render :new
-    else
+    elsif @user.activated?
       @user.reset_session_token!
       session[:session_token] = @user.session_token
       redirect_to user_url(@user)
+    else
+      render text: "You should expect an email soon..."
     end
   end
   
@@ -29,4 +31,5 @@ class SessionsController < ApplicationController
   def session_params
     params.require(:user).permit(:email, :password)
   end
+  
 end

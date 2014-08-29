@@ -10,11 +10,20 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      sign_in!(@user)
-      redirect_to user_url(@user)
+      UserMailer.welcome_email(@user).deliver
+      # sign_in!(@user)
+      render text: "You should receive an email shortly!"#user_url(@user)
     else
       render :new
     end
+  end
+  
+  def activate
+    @user = User.find_by_activation_token(params[:activation_token])
+    @user.activated = true
+    @user.save!
+    sign_in!(@user)
+    redirect_to root_url
   end
   
   def show
