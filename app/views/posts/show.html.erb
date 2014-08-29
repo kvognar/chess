@@ -1,5 +1,5 @@
 <h1><%= link_to @post.title, (@post.url || post_url(@post)) %></h1>
-<p>Posted in <%= link_to @post.sub_title, sub_url(@post.sub) %></p>
+<p>Posted in <%= links_to_subs(@subs) %></p>
 <p>Posted by <%= @post.author_username %></p>
 <p><%= @post.content %></p>
 
