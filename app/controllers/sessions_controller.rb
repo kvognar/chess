@@ -9,7 +9,7 @@ class SessionsController < ApplicationController
     @user = User.find_by_credentials(session_params)
     if @user
       login!(@user)
-      render json: @user
+      redirect_to subs_url
     else
       render :new
     end

@@ -29,6 +29,11 @@ gem 'spring',        group: :development
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.7'
 
+group :development do
+  gem "better_errors"
+  gem "binding_of_caller"
+  gem 'annotate'
+end
 # Use unicorn as the app server
 # gem 'unicorn'
 

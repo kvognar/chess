@@ -1,0 +1,25 @@
+<% action = method == "POST" ? subs_url : sub_url(sub) %>
+<% button_text = method == "POST" ? "Create sub" : "Update sub" %>
+
+<form action="<%= action %>" method="POST">
+   <%= authentication_token %>
+   <input type="hidden" name="_method" value="<%= method %>">
+   
+   <label for="sub_title">
+     Title
+   </label>
+   <input 
+     type="text" 
+     id="sub_title" 
+     name="sub[title]" 
+     value="<%= sub.title %>">
+     
+  <label for="sub_description">
+    Description
+  </label>
+  <textarea name="sub[description]" id="sub_description">
+    <%= sub.description %>
+  </textarea>
+  
+  <input type="submit" value="<%= button_text %>">
+</form>

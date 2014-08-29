@@ -1,0 +1,16 @@
+<h1><%= @sub.title %></h1>
+
+
+
+<div class="sub_sidebar">
+  <p>Moderator: <%= @sub.moderator.username %></p>
+  <p><%= @sub.description %></p>
+</div>
+
+<ul>
+  <% @sub.posts.each do |post| %>
+    <li><%= link_to post.title, post_url(post) %></li>
+  <% end %>
+</ul>
+
+<%= button_to "New Post", new_post_url(@sub), method: :get %>

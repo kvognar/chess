@@ -8,7 +8,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       login!(@user)
-      render json: @user
+      redirect_to subs_url
     else
       render :new
     end

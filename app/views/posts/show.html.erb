@@ -1,0 +1,9 @@
+<h1><%= link_to @post.title, (@post.url || post_url(@post)) %></h1>
+<p>Posted in <%= link_to @post.sub_title, sub_url(@post.sub) %></p>
+<p>Posted by <%= @post.author_username %></p>
+<p><%= @post.content %></p>
+
+<% if @post.author_id = current_user.id %>
+  <%= button_to "Edit post", edit_post_url(@post), method: :get %>
+<% end %>
+

@@ -8,6 +8,8 @@
 </head>
 <body>
   
+<h1><%= link_to "Reddit", subs_url %></h1>
+  
 <% if logged_in? %>
   <%= button_to "Log out",
     session_url,
@@ -21,6 +23,8 @@
     new_user_url,
     method: :get %>
 <% end %>
+
+
 
 <%= yield %>
 

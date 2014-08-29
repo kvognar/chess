@@ -1,3 +1,15 @@
+# == Schema Information
+#
+# Table name: users
+#
+#  id              :integer          not null, primary key
+#  username        :string(255)      not null
+#  password_digest :string(255)      not null
+#  session_token   :string(255)      not null
+#  created_at      :datetime
+#  updated_at      :datetime
+#
+
 class User < ActiveRecord::Base
   validates :password, length: { minimum: 6, allow_nil: true }
   validates :password_digest, presence: true
@@ -6,6 +18,20 @@ class User < ActiveRecord::Base
   attr_reader :password
   
   after_initialize :ensure_token
+  
+  has_many(
+    :subs,
+    class_name: "Sub",
+    foreign_key: :moderator_id,
+    primary_key: :id
+  )
+  
+  has_many(
+    :posts,
+    class_name: "Post",
+    foreign_key: :author_id,
+    primary_key: :id    
+  )
   
   def self.find_by_credentials(credentials)
     @user = User.find_by_username(credentials[:username])
