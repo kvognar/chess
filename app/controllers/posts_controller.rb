@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-  before_action :ensure_logged_in, only: [:new, :create, :edit, :update]
+  before_action :ensure_logged_in!, only: [:new, :create, :edit, :update]
   
   def new
     @post = Post.new(sub_ids: [params[:id]])
@@ -8,8 +8,6 @@ class PostsController < ApplicationController
   end
 
   def create
-    puts post_params
-    puts "*" * 100
     @post = Post.new(post_params)
     @post.author = current_user
     if @post.save
@@ -26,8 +24,6 @@ class PostsController < ApplicationController
   end
 
   def update
-    puts post_params
-    puts "*" * 100
     @post = Post.find(params[:id])
     if @post.update_attributes(post_params)
       redirect_to post_url(@post)
@@ -39,6 +35,7 @@ class PostsController < ApplicationController
   def show
     @post = Post.find(params[:id])
     @subs = @post.subs
+    @comments = @post.comments
     render :show
   end
   

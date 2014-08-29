@@ -11,4 +11,7 @@ Rails.application.routes.draw do
   end
   
   resources :posts, only: [:show, :create, :edit, :update]
+  
+  resources :comments, only: [:create]
+  
 end

@@ -1,5 +1,5 @@
 class SubsController < ApplicationController
-  before_action :ensure_logged_in, only: [:show, :index]
+  before_action :ensure_logged_in!, only: [:show, :index]
   
   def new
     @sub = Sub.new
