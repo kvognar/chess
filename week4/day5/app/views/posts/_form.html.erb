@@ -1,0 +1,49 @@
+<% action = method == "POST" ? posts_url : post_url(post) %>
+<% button_text = method == "POST" ? "Create post" : "Update post" %>
+
+<form action="<%= action %>" method="POST">
+  <%= authentication_token %>
+  <input type="hidden" name="_method" value="<%= method %>">
+  <input type="hidden" name="post[sub_ids][]" value="">
+ 
+  <!-- Title -->
+  <label for="post_title">
+    Title
+  </label>
+  <input 
+    type="text" 
+    id="post_title" 
+    name="post[title]" 
+    value="<%= post.title %>">
+ 
+   <!-- URL -->
+  <label for="post_url">
+    URL
+  </label>
+  <input 
+    type="text" 
+    id="post_url" 
+    name="post[url]" 
+    value="<%= post.url %>">
+  
+  <!-- Content -->
+  <textarea
+    id="post_content"
+    name="post[content]"
+  ><%= post.content %></textarea>
+  
+  <!-- Sub -->
+  <% @subs.each do |sub| %>
+    <label>
+      <input
+        type="checkbox"
+        id="post_subs"
+        name="post[sub_ids][]"
+        value="<%= sub.id %>"
+        <%= "checked" if post.sub_ids.include?(sub.id) %>>
+      <%= sub.title %>
+    </label>
+  <% end %>
+  
+  <input type="submit" value="<%= button_text %>">
+</form>
