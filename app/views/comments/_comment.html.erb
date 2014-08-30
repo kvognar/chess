@@ -1,4 +1,11 @@
 <div class="comment">
   <h4><%= comment.author_username %></h4>
   <p><%= comment.content %></p>
+
+  <% @comments[comment.id].each do |child| %>
+    <%= render partial: "comments/comment", locals: { comment: child } %>
+  <% end %>
+  
+  <%= render partial: "comments/form", 
+             locals: { post_id: comment.post_id, parent_id: comment.id} %>
 </div>
