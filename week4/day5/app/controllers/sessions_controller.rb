@@ -11,6 +11,8 @@ class SessionsController < ApplicationController
       login!(@user)
       redirect_to subs_url
     else
+      flash.now[:errors] = ["Username/password combination not found."]
+      @user = User.new(session_params)
       render :new
     end
   end

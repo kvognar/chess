@@ -8,9 +8,16 @@
 </div>
 
 <ul>
-  <% @sub.posts.each do |post| %>
-    <li><%= link_to post.title, post_url(post) %></li>
+  <% @posts.each do |post| %>
+    <li>
+      <%= link_to post.title, post_url(post) %>
+      (<%= post.votes.inject(0) { |sum, vote| sum + vote.value } %>)
+      <%= button_to "⬆︎", upvote_post_url(post) %>
+      <%= button_to "⬇︎", downvote_post_url(post) %>
+    </li>
+    
   <% end %>
 </ul>
 
 <%= button_to "New Post", new_post_url(@sub), method: :get %>
+

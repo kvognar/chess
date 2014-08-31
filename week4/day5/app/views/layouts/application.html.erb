@@ -9,6 +9,13 @@
 <body>
   
 <h1><%= link_to "Reddit", subs_url %></h1>
+<% unless flash[:errors].nil? %>
+  <ul>
+    <% flash[:errors].each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+  </ul>
+<% end %>
   
 <% if logged_in? %>
   <%= button_to "Log out",

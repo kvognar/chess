@@ -1,3 +1,5 @@
+require 'votable'
+
 # == Schema Information
 #
 # Table name: comments
@@ -12,6 +14,7 @@
 #
 
 class Comment < ActiveRecord::Base
+  include Votable
   validates :author, :post, :content, presence: true
   delegate :username, to: :author, prefix: true
   
@@ -46,5 +49,6 @@ class Comment < ActiveRecord::Base
     foreign_key: :parent_id,
     primary_key: :id
   )
+  
   
 end

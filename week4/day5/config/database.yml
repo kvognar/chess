@@ -13,6 +13,6 @@ development:
   <<: *default
   database: reddit_clone
   host: localhost
-  username: appacademy
+  username: 
   password:
   

@@ -1,3 +1,5 @@
+require 'votable'
+
 # == Schema Information
 #
 # Table name: posts
@@ -12,6 +14,8 @@
 #
 
 class Post < ActiveRecord::Base
+  include Votable
+  
   validates :title, :author, presence: true
   delegate :username, to: :author, prefix: true
   

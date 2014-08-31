@@ -40,6 +40,13 @@ class User < ActiveRecord::Base
     primary_key: :id
   )
   
+  has_many(
+    :cast_votes,
+    class_name: "Vote",
+    foreign_key: :voter_id,
+    primary_key: :id
+  )
+  
   def self.find_by_credentials(credentials)
     @user = User.find_by_username(credentials[:username])
     @user && @user.is_password?(credentials[:password]) ? @user : nil

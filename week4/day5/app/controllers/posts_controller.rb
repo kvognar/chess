@@ -1,4 +1,7 @@
+require 'votables_controller'
 class PostsController < ApplicationController
+  include VotablesController
+  
   before_action :ensure_logged_in!, only: [:new, :create, :edit, :update]
   
   def new
@@ -13,6 +16,8 @@ class PostsController < ApplicationController
     if @post.save
       redirect_to post_url(@post)
     else
+      @subs = Sub.all
+      flash.now[:errors] = @post.errors.full_messages
       render :new
     end
   end
@@ -28,6 +33,8 @@ class PostsController < ApplicationController
     if @post.update_attributes(post_params)
       redirect_to post_url(@post)
     else
+      flash.now[:errors] = @post.errors.full_messages
+      @subs = Sub.all
       render :edit
     end
   end
@@ -35,7 +42,7 @@ class PostsController < ApplicationController
   def show
     @post = Post.find(params[:id])
     @subs = @post.subs
-    @comments = @post.comments_by_parent_id     
+    @comments = @post.comments_by_parent_id
     render :show
   end
   

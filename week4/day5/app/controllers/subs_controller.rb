@@ -12,6 +12,7 @@ class SubsController < ApplicationController
     if @sub.save
       redirect_to sub_url(@sub)
     else
+      flash.now[:errors] = @sub.errors.full_messages
       render :new
     end
   end
@@ -26,15 +27,17 @@ class SubsController < ApplicationController
     if @sub.update_attributes(sub_params)
       redirect_to sub_url(@sub)
     else
+      flash.now[:errors] = @sub.errors.full_messages
       render :edit
     end
   end
 
   def show
-    @sub = Sub.find(params[:id])
+    @sub = Sub.includes(:moderator, posts: :votes).find(params[:id])
+    @posts = @sub.posts.sort { |a, b| b.score <=> a.score }
     render :show
   end
-
+# .sort { |a, b| a.score <=> b.score }
   def index
     @subs = Sub.all
     render :index

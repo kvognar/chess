@@ -1,4 +1,7 @@
+require 'votables_controller'
 class CommentsController < ApplicationController
+  include VotablesController
+  
   before_action :ensure_logged_in!
   
   def create

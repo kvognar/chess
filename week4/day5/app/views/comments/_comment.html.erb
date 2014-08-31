@@ -1,6 +1,9 @@
 <div class="comment">
-  <h4><%= comment.author_username %></h4>
+  <h4><%= comment.author_username %> (<%= comment.score %>)</h4>
   <p><%= comment.content %></p>
+  <%= button_to "⬆︎", upvote_comment_url(comment) %>
+  <%= button_to "⬇︎", downvote_comment_url(comment) %>
+  
 
   <% @comments[comment.id].each do |child| %>
     <%= render partial: "comments/comment", locals: { comment: child } %>
