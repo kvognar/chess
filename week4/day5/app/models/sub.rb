@@ -11,7 +11,10 @@
 #
 
 class Sub < ActiveRecord::Base
+  extend FriendlyId
+  
   validates :title, :description, :moderator, presence: true
+  friendly_id :title, use: [:slugged, :finders]
   
   belongs_to(
     :moderator,
@@ -30,6 +33,7 @@ class Sub < ActiveRecord::Base
   
   has_many(
     :posts,
+    -> { includes :votes },
     through: :post_subs,
     source: :post
   )

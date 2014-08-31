@@ -15,9 +15,15 @@ require 'votable'
 
 class Post < ActiveRecord::Base
   include Votable
+  include FriendlyId
   
   validates :title, :author, presence: true
   delegate :username, to: :author, prefix: true
+  friendly_id :title, use: [:slugged, :finders]
+  
+  def should_generate_new_friendly_id?
+    title_changed?
+  end
   
   belongs_to(
     :author,
@@ -42,10 +48,11 @@ class Post < ActiveRecord::Base
   
   has_many(
     :comments,
+    -> { includes :votes, :author },
     class_name: "Comment",
     foreign_key: :post_id,
     primary_key: :id
-  )
+    )
   
   has_many(
     :top_level_comments,
