@@ -62,6 +62,10 @@ class Post < ActiveRecord::Base
       comments_by_parent_id[comment.parent_id] << comment
     end
     
+    comments_by_parent_id.each do |id, comments|
+      comments_by_parent_id[id].sort! { |a, b| b.score <=> a.score }
+    end
+    
     comments_by_parent_id
   end
   
