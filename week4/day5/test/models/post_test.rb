@@ -9,6 +9,7 @@
 #  author_id  :integer          not null
 #  created_at :datetime
 #  updated_at :datetime
+#  slug       :string(255)
 #
 
 require 'test_helper'

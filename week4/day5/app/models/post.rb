@@ -1,5 +1,4 @@
-require 'votable'
-
+# require 'votable'
 # == Schema Information
 #
 # Table name: posts
@@ -11,6 +10,7 @@ require 'votable'
 #  author_id  :integer          not null
 #  created_at :datetime
 #  updated_at :datetime
+#  slug       :string(255)
 #
 
 class Post < ActiveRecord::Base

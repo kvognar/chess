@@ -1,4 +1,4 @@
-require 'votable'
+# require 'votable'
 
 # == Schema Information
 #
