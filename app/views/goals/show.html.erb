@@ -1,0 +1,10 @@
+<h2>Your Goal: <%= @goal.title %></h2>
+<%= "Completed!" if @goal.completed %>
+
+<h3> Description </h3>
+<p><%= @goal.description %></p>
+
+<h3> Progress </h3>
+
+<%= link_to "Back to Goals", user_url(@goal.user) %>
+<%= link_to "Edit this Goal", edit_goal_url(@goal) %>
