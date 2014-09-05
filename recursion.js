@@ -2,7 +2,7 @@ var range = function(start, end){
   if (start === end){
     return [end];
   }
-  return range(start, end -1 ).concat([end]) ;
+  return range(start, end -1 ).concat([end]);
 };
 
 // console.log(range(1,10));
@@ -106,7 +106,7 @@ var mergeSort = function(arr){
   if(arr.length <= 1){ return arr; }
   var middle = Math.floor(arr.length/2);
   var left = mergeSort(arr.slice(0, middle));
-  var right = mergeSort(arr.slice(middle, arr.length));
+  var right = mergeSort(arr.slice(middle));
   return merge(left, right);
 };
 
