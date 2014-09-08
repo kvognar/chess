@@ -1,6 +1,6 @@
 (function(){
   if (typeof Asteroids === "undefined" ){
-    var Asteroids = window.Asteroids = {};
+    Asteroids = {};
   }
   
   var Util = Asteroids.Util = {};
@@ -16,5 +16,11 @@
     return [ min + Math.random() * max, min + Math.random() * max];
   };
   
+  Util.distance = function(obj1, obj2){
+    return Math.sqrt(Math.pow( (obj1.pos[0] - obj2.pos[0]), 2 ) + 
+           Math.pow( (obj1.pos[1] - obj2.pos[1]), 2));
+  };
+  
 })();
+
 

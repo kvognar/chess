@@ -10,11 +10,11 @@ console.log(sum(1, 2, 3, 4));
 
 Function.prototype.myBind = function(obj){
  var args = Array.prototype.slice.call(arguments, 1);
- var fn =this;
+ var fn = this;
  
- return function(){
-   var my_arguments = Array.prototype.slice.call(arguments);
-   return fn.call(obj, args.concat(my_arguments));
+ return function() {
+   var myArguments = Array.prototype.slice.call(arguments);
+   return fn.apply(obj, args.concat(myArguments));
  }
   
 };
