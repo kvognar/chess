@@ -11,9 +11,19 @@
   GameView.prototype.start = function () {
     this.bindKeyHandlers();
     // this.game.addAsteroids();
-    setInterval(function () {
-      this.game.moveObjects();
-      this.game.draw(this.ctx);
+    var gameLoop = setInterval(function () {
+      if (!this.game.isOver()){
+        this.game.moveObjects();
+        this.game.draw(this.ctx);
+      }
+      else if(this.game.isWon()){
+        alert("You won!");
+        clearInterval(gameLoop);
+      }
+      else if(this.game.isLost()){
+        alert("You lost");
+        clearInterval(gameLoop);
+      }
     }, 20);
   };
   

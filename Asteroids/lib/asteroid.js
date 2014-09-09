@@ -9,7 +9,7 @@
       color: Asteroid.COLOR,
       radius: Asteroid.RADIUS,
       pos: game.randomPosition(),
-      vel: Asteroids.Util.randomVec(-5, 15),
+      vel: Asteroids.Util.randomVec(-5, 5),
       game: game
     });
   };

@@ -8,9 +8,10 @@
     this.addAsteroids();
     this.addShip();
     this.bullets = [];
+    this.lives = 3;
   };
   
-  Game.NUM_ASTEROIDS = 1;
+  Game.NUM_ASTEROIDS = 30;
   Game.DIM_X = 800;
   Game.DIM_Y = 600;
   
@@ -93,6 +94,16 @@
              pos[1] > 0 && pos[1] < Game.DIM_Y));
   };
   
+  Game.prototype.isWon = function () {
+    return (this.asteroids.length === 0);
+  }; 
   
+  Game.prototype.isLost = function () {
+    return this.lives < 1;   
+  };
+   
+  Game.prototype.isOver = function() {
+    return ( this.isWon() || this.isLost());
+  }; 
 })();
 

@@ -23,8 +23,9 @@
   Asteroids.Util.inherits(Asteroids.MovingObject, Ship);
  
   Ship.prototype.relocate = function () {
-    this.pos = game.randomPosition();
+    this.pos = this.game.randomPosition();
     this.vel = [0, 0];
+    this.game.lives -= 1;
   };
   
   Ship.prototype.rotate = function (impulse) {
@@ -38,7 +39,9 @@
   };
   
   Ship.prototype.fireBullet = function () {
+    
     var bulletVetocity = [ Math.cos(Asteroids.Util.toRadians(this.angle)) * 10,
+    
     Math.sin(Asteroids.Util.toRadians(this.angle)) * 10 ];
     
     bullet = new Asteroids.Bullet(this.game, bulletVetocity);
