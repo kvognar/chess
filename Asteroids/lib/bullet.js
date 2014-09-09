@@ -6,13 +6,14 @@
   
   
   
-  var Bullet = Asteroids.Bullet = function (game) {
+  var Bullet = Asteroids.Bullet = function (game, vel) {
     Asteroids.MovingObject.call(this,  {
       color: Bullet.COLOR,
       radius: Bullet.RADIUS,
       pos: game.ship.pos,
-      vel: [1+game.ship.vel[0] * 2, game.ship.vel[1] * 2],
+      vel: vel,
       game: game
+      
     });
     this.isWrappable = false;
     game.bullets.push(this);

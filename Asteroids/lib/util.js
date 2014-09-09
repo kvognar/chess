@@ -21,6 +21,14 @@
            Math.pow( (obj1.pos[1] - obj2.pos[1]), 2));
   };
   
+  Util.toDegrees = function(radians) {
+    return radians * (180 / Math.PI);
+  };
+  
+  Util.toRadians = function(degrees) {
+    return degrees * (Math.PI / 180);
+  };
+  
 })();
 
 
