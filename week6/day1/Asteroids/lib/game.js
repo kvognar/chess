@@ -11,7 +11,7 @@
     this.lives = 3;
   };
   
-  Game.NUM_ASTEROIDS = 30;
+  Game.NUM_ASTEROIDS = 5;
   Game.DIM_X = 800;
   Game.DIM_Y = 600;
   
