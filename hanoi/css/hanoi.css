@@ -1,0 +1,57 @@
+body, div {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font: inherit;
+    font-family: sans-serif;
+    vertical-align: baseline;
+}
+
+div {
+  box-sizing: border-box;
+}
+
+.towers {
+  border: thin solid black;
+  margin: 0 auto;
+  height: 400px;
+  width: 602px; 
+/* todo: figure out why this is so dumb ^ */
+}
+
+.tower {
+  height: 400px;
+  width: 200px;
+  border: thin solid black;
+  position: relative;
+  display: table-cell;
+  vertical-align: bottom;
+  
+}
+
+.selected {
+  background-color: azure;
+}
+
+.disk {
+  height: 80px;
+  width: 100px;
+  border: thin solid black;
+  margin: 0 auto;
+  background-color: purple;
+  border-radius: 5px;
+}
+
+
+
+.disk.size-1 {
+  width: 50px;
+}
+
+.disk.size-2 {
+  width: 100px;
+}
+
+.disk.size-3 {
+  width: 150px;
+}
