@@ -9,6 +9,7 @@
     this.$towers = $towers;
     this.render();
     this.chosenTower = null;
+    this.$towers.on('click', '.tower',  this.moveTower.bind(this));
   };
     
   UI.prototype.moveTower = function (event) {
@@ -37,6 +38,7 @@
 
   UI.prototype.render = function () {
     this.$towers.children().remove();
+    var $towersContainer = $('<div>');
     
     for(var i = 0; i < 3; i++) {
       var $tower = $('<div>');
@@ -49,10 +51,11 @@
         $disk.addClass("size-" + this.game.towers[i][j]);
         $tower.append($disk);
       }
-      this.$towers.append($tower);
+      // this.$towers.append($tower);
+      $towersContainer.append($tower);
     }
-    
-    $('.tower').on('click', this.moveTower.bind(this));
+    this.$towers.html($towersContainer);
+   
   };
   
 })();
