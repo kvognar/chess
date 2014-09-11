@@ -1,0 +1,63 @@
+body, div {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font: inherit;
+    font-family: sans-serif;
+    vertical-align: baseline;
+}
+
+.board {
+  margin: 0 auto;
+  width: 300px;
+  height: 300px;
+  border: thin solid black;
+}
+
+.row {
+  box-sizing: border-box;
+  height: 100px;
+}
+
+.cell {
+  border: thin solid black;
+/*  display: inline-block;*/
+  float: left;
+  width: 100px;
+  height: 100px;
+  box-sizing: border-box;
+  background-color: white;
+  font-size: 50px;
+  color: white;
+  text-align: center;
+}
+
+.cell p {
+  margin-top: 15px;
+}
+
+/*p {
+  font-size: 500%;
+}*/
+
+/*.cell.x:before {
+  content: "<p>X</p>";
+  height: 100px;
+}
+
+.cell.o:before {
+  content: "O";
+}*/
+
+.cell.x {
+  background-color: violet;
+  
+}
+
+.cell.o {
+  background-color: lightblue;
+}
+
+.cell:not(.o):not(.x):hover {
+  background-color: lightyellow;
+}
