@@ -23,7 +23,6 @@ div {
   height: 400px;
   width: 200px;
   border: thin solid black;
-  position: relative;
   display: table-cell;
   vertical-align: bottom;
   
