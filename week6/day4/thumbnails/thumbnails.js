@@ -13,11 +13,11 @@ $.Thumbnails = function (el) {
 };
 
 $.Thumbnails.prototype.bindHandlers = function () {
-  this.$imageNav.find('.navleft').on("click", function () {
+  this.$imageNav.on("click", '.navleft', function () {
     this.moveGutterStart(-1);
   }.bind(this));
   
-  this.$imageNav.find('.navright').on("click", function () {
+  this.$imageNav.on("click", '.navright', function () {
     this.moveGutterStart(1);
   }.bind(this));
   

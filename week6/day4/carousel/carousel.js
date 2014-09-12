@@ -1,6 +1,6 @@
 $.Carousel = function (el) {
   this.$el = $(el);
-  this.$items = $(".carousel").find(".items");
+  this.$items = this.$el.find(".items");
   this.$imgs = this.$items.find("img");
   this.activeIndex = 0;
   this.transitioning = false;
@@ -43,15 +43,14 @@ $.Carousel.prototype.slide = function (int) {
 };
 
 $.Carousel.prototype.shiftIndex = function (int) {
-  var newIndex = this.activeIndex + int;
+  this.activeIndex += int;
   
-  if (newIndex < 0) {
-    newIndex = this.$imgs.length - 1;
-  } else if (newIndex >= this.$imgs.length) {
-    newIndex = 0;
+  if (this.activeIndex < 0) {
+    this.activeIndex = this.$imgs.length - 1;
+  } else if (this.activeIndex >= this.$imgs.length) {
+    this.activeIndex = 0;
   }
-  
-  this.activeIndex = newIndex;
+
 };
 
 $.Carousel.prototype.slideLeft = function () {
