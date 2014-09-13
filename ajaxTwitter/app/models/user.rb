@@ -41,16 +41,18 @@ class User < ActiveRecord::Base
     self.save!
   end
 
-  def feed_tweets(limit = nil, max_created_at = 3.days.ago)
-    p (max_created_at)
-    p 3.days.ago
+  def feed_tweets(limit = 10, max_created_at = Time.now)
+    max_created_at ||= Time.now
     @tweets = Tweet
       .joins(:user)
       .joins("LEFT OUTER JOIN follows ON users.id = follows.followee_id")
       .where("tweets.user_id = :id OR follows.follower_id = :id", id: self.id)
-      .where("tweets.created_at < ?", max_created_at)
-      .order("tweets.created_at DESC")
+      .order("tweets.created_at DESC").limit(limit)
+      .group("users.id")
+      .group("tweets.id")
+      .having("tweets.created_at < ?", max_created_at)
       .uniq
+  
 
     # TODO: How can we use limit/max_created_at here??
     
