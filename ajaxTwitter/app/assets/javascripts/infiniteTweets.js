@@ -6,6 +6,7 @@ $.infiniteTweets = function(el, options) {
 
 
 $.infiniteTweets.prototype.fetchTweets = function() {
+  
     function removeGetTweets() {
      $(".fetch-more").remove();
      $("#feed").append("<p>There are no more tweets!</p>");
@@ -14,13 +15,16 @@ $.infiniteTweets.prototype.fetchTweets = function() {
     method: "GET",
     url:"/feed",
     dataType: "json",
-    success: function(tweet) {
-      if($(tweet).length > 0){
-      
-        $("#feed").append("<li>"+JSON.stringify(tweet)+ "</li>");
-        this.maxCreatedAt = $(tweet).last().attr("created_at");
-      
-        if( $(tweet).length < 10) {
+    success: function(tweets) {
+      if($(tweets).length > 0){
+        var template = $("#feed-template").html();
+        var result = _.template(template);
+        result = result({tweets:tweets});
+        console.log($(result).html());
+        $("#feed").append(result);
+        this.maxCreatedAt = $(tweets).last().attr("created_at");
+        
+        if( $(tweets).length < 10) {
           removeGetTweets();
         }
       } else {

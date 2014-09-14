@@ -2,12 +2,19 @@
 
 <b>Your Feed!</b>
 <div class="infinite-tweets">
-  <ul id="feed">
-    
+
+      
     <!-- <% @feed_tweets.each do |tweet| %>
       <li><%= render "tweets/tweet", tweet: tweet %></li>
     <% end %> -->
-  </ul>
+      <ul id="feed">
+      <script type="text/template" id="feed-template">
+          <%% tweets.forEach(function (tweet) { %>
+            <li><strong>post: </strong><%%=tweet.content%><br> <strong> by: </strong> <%%=tweet.user.username%> </li><br>
+
+          <%% }); %>
+      </script>
+      </ul>  
   <a href="javascript:void(0)" class="fetch-more">Fetch More</a>
 </div>
 <%= render "tweets/form" %>
