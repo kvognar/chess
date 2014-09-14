@@ -4,17 +4,33 @@ $.infiniteTweets = function(el, options) {
   this.maxCreatedAt = null;
 };
 
+
 $.infiniteTweets.prototype.fetchTweets = function() {
+    function removeGetTweets() {
+     $(".fetch-more").remove();
+     $("#feed").append("<p>There are no more tweets!</p>");
+  } 
   $.ajax({
     method: "GET",
     url:"/feed",
     dataType: "json",
     success: function(tweet) {
-      $("#feed").append("<li>"+JSON.stringify(tweet)+ "</li>");
-    },
-    data: this.maxCreatedAt
+      if($(tweet).length > 0){
+      
+        $("#feed").append("<li>"+JSON.stringify(tweet)+ "</li>");
+        this.maxCreatedAt = $(tweet).last().attr("created_at");
+      
+        if( $(tweet).length < 10) {
+          removeGetTweets();
+        }
+      } else {
+        removeGetTweets();
+      }
+    }.bind(this),
+    data: {"max_created_at":this.maxCreatedAt}
   });
 };
+
 
 
 $.fn.infiniteTweets = function(options) {
