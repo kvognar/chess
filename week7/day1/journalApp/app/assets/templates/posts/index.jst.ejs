@@ -1,0 +1,7 @@
+<ul>
+  <% posts.each(function(post) { %>
+    <li><a href="#/posts/<%=post.id %>"><%= post.escape('title') %> </a>
+    <button class="remove-post" data-id="<%= post.id%>">Remove</button>
+    </li>
+  <% }); %>
+</ul>
