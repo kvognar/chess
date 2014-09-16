@@ -5,12 +5,16 @@ window.Journal = {
   Routers: {},
   initialize: function() {
     // alert('Hello from Backbone!');
-    this.posts.fetch({
-      success: function() {
-        this.indexView.render();
-        $('body').append(this.indexView.$el);
-      }.bind(this)
-    });
+    this.router = new Journal.Routers.PostsRouter({
+      $el: $("#journal-content")
+    }); 
+    // this.posts.fetch({
+    //   success: function() {
+    //     this.indexView.render();
+    //     $('body').append(this.indexView.$el);
+    //   }.bind(this)
+    // });
+    Backbone.history.start();
   }
 };
 
