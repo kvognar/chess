@@ -1,0 +1,16 @@
+<h2>All the feeds</h2>
+
+<ul>
+  <% feeds.each(function (feed) { %>
+    <li>
+      <a href="#/feeds/<%= feed.id %>"><%= feed.escape("title") %></a>
+      <button class="btn-delete" data-id="<%= feed.id %>">Delete</button>
+    </li>
+  <% }); %>  
+</ul>
+
+<button class="btn-refresh">Refresh</button>
+
+<div class="new-form-container">
+  <button class="btn-new-feed">New Feed</button>
+</div>
