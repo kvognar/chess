@@ -16,7 +16,7 @@
 //= require bootstrap
 
 $(function () {
-  $('form').on('submit', function (event) {
+  $('.dummy-form').on('submit', function (event) {
     event.preventDefault();
     $('.alert').remove();
     $(':input').removeClass('has-warning has-error has-success');
@@ -44,4 +44,6 @@ $(function () {
     
     $('body').append($alertEl);
   });
+  
+  $(".tooltipped").tooltip();
 });

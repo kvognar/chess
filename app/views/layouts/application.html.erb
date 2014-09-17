@@ -6,7 +6,7 @@
     <%= javascript_include_tag 'application' %>
     <%= csrf_meta_tags %>
   </head>
-  <body>
+  <body data-spy="scroll" data-target=".navbar-spy">
     <nav class="navbar navbar-default" role="navigation">
       <div class="container-fluid">
         <div class="navbar-header">
@@ -19,7 +19,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">astral.ly</a>
+          <a class="navbar-brand" href="/home">astral.ly</a>
         </div>
         
         <div class="collapse navbar-collapse" id="navbar-collapse">
@@ -30,14 +30,27 @@
           </ul>
         
 
-          <ul class="nav navbar-nav navbar-right">
+          <div class="nav navbar-nav navbar-right">
             <% if signed_in? %>
-              <li>
-                <%= button_to "Sign Out", 
-                  session_url, 
-                  :method => :delete,
-                  class: "btn btn-primary" %>
-              </li>
+              <div class="dropdown">
+                <button class="btn btn-default dropdown-toggle"
+                        type="button"
+                        id="headerDropdown"
+                        data-toggle="dropdown">
+                        <%= current_user.username %>
+                        <span class="caret"></span>
+                </button>
+              
+                <ul class="dropdown-menu">
+                  <li>
+                    <%= link_to "Your Profile", user_url(current_user) %>
+                  </li>
+                  <li>
+                    <%= link_to "Sign Out", session_url, method: :delete %>
+                  </li>
+                </ul>
+              </div>
+              
             <% else %>
               <li>
                 <%= link_to "Sign In", new_session_url %>
@@ -47,7 +60,7 @@
               </li>
 
             <% end %>
-          </ul>
+          </div>
         </div>
         
       </div>

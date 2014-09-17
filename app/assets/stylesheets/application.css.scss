@@ -14,3 +14,11 @@
 
 @import "bootstrap-sprockets";
 @import "bootstrap";
+
+body {
+  position: relative;
+}
+
+.navbar-right {
+  margin-top: 8px;
+}
