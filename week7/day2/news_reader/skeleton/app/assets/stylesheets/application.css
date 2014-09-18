@@ -16,3 +16,7 @@ div {
   display: table-cell;
   vertical-align: top;
 }
+
+html {
+  font-family: sans-serif;
+}
