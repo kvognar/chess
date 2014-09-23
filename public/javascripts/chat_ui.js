@@ -10,6 +10,7 @@ $(function () {
     this.chat.socket.on('newUserJoins', this.addUsername.bind(this));
     this.chat.socket.on('nicknameChange', this.switchUsername.bind(this));
     this.chat.socket.on('allUsers', this.initializeUsers.bind(this));
+    this.chat.socket.on('userExit', this.removeUser.bind(this));
   };
   
   ChatApp.ChatUI.prototype.addMessage = function (msg) {
@@ -38,6 +39,13 @@ $(function () {
       this.chat.sendMessage(msg);
     }
   };
+  
+  ChatApp.ChatUI.prototype.removeUser = function (data) {
+    debugger;
+    this.users.splice(this.users.indexof(data.nickname), 1);
+    this.addMessage( { text: data.nickname + " has left the room."});
+    this.renderUsernames();
+  }
   
   ChatApp.ChatUI.prototype.initializeUsers = function (data) {
     this.users = data.users;
