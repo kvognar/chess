@@ -1,0 +1,49 @@
+<html>
+<head>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js">
+  </script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="javascripts/chat.js"></script>
+  <script src="javascripts/chat_ui.js"></script>
+  <style>
+  #usernames {
+    background-color: black;
+    color: white;
+    width: 20%;
+    float: right;
+  }
+  #messages {
+    border: thin solid darkgreen;
+    width: 50%;
+    float: left;
+  }
+  </style>
+</head>
+<body>
+  <h1>Phenomenal chat app.</h1>
+  <form id="form">
+    <label for="message-input">Input message.</label>
+    <input type="text" name="message-input" value="" id="message-input">
+    <input type="submit" value="Go">
+  </form>
+  <ul id="usernames"></ul>
+  <ul id="messages"></ul>
+</body>
+  <script>
+    
+  $(function () {
+    var socket = io('http://localhost');
+    socket.on('greeting', function (data) {
+      console.log(data);
+      $('#messages').append('<h3>' + data.greeting + '</h3>');
+      socket.emit('reply', { message: 'Top of the morning to ye' });
+    });
+    
+    var chat = new ChatApp.Chat(socket);
+    var chatUI = new ChatApp.ChatUI(chat);
+
+    $('#form').on('submit', chatUI.sendMessage.bind(chatUI));
+    
+  });
+  </script>
+</html>
