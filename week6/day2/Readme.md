@@ -1,1 +1,0 @@
-### Partner for today: [Max Pleaner](https://github.com/MaxPleaner)

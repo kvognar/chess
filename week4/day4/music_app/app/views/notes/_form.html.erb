@@ -1,7 +1,0 @@
-<h4>Commenting as <%= current_user.email %></h4>
-<form action="<%= track_notes_url(track) %>" method="POST" >
-  <%= authenticity_token %>
-  <textarea name="note[body]">
-  </textarea>
-  <input type="submit" value="Submit">
-</form>

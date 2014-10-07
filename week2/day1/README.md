@@ -1,1 +1,0 @@
-### Partner today: [Matt Leick](https://github.com/mattlock12)

@@ -1,1 +1,0 @@
-### Partner for today: [Misa](https://github.com/misa5555) 

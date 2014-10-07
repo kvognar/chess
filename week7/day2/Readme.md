@@ -1,1 +1,0 @@
-### Partner for today: [Yuriy Tolstykh](https://github.com/ytolstyk)

@@ -1,1 +1,0 @@
-### Partner for today: [Wuang Qin](https://github.com/conwqi1)
