@@ -6,5 +6,5 @@ This is a simple chess game built using the Tk GUI toolkit. Click a piece to sel
 
 This game requires the tk gem, which doesn't play well with RVM.
 
-![chess screenshot 1](./chess_screenshot_1.png)
-![chess screenshot 2](./chess_screenshot_2.png)
+![chess screenshot 1](https://raw.githubusercontent.com/kvognar/chess/master/chess_screenshot1.png)
+![chess screenshot 2](https://raw.githubusercontent.com/kvognar/chess/master/chess_screenshot2.png)
